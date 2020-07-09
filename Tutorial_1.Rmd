@@ -1,0 +1,8 @@
+---
+title: "Tutorial_1"
+author: "Maxwel Coura Oliveira"
+date: "7/9/2020"
+output: pdf_document
+---
+
+Outline
