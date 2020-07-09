@@ -1,0 +1,96 @@
+---
+title: "Exercícios 1"
+author: "Maxwel Coura Oliveira"
+date: "7/6/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+1) Escreva o código para instruir R a executar os seguintes cálculos:
+
+```python
+224 + 667
+
+35 / 7
+
+(22 * 5) + 3
+```
+
+2) Digamos que você seja um aluno que frequenta sete aulas. Aqui está uma tabela que contém as notas de seu exame, trabalhos e projetos para cada classe (de 100 pontos):
+
+|      Classe     	| Exame 	| Trabalhos 	| Projetos 	|
+|:---------------:	|:-----:	|:---------:	|:--------:	|
+| Matemática      	| 92    	| 87        	| 85       	|
+| Química         	| 90    	| 81        	| 92       	|
+| Redação         	| 84    	| 95        	| 79       	|
+| Português       	| 95    	| 86        	| 93       	|
+| História        	| 77    	| 85        	| 90       	|
+| Inglês          	| 92    	| 90        	| 91       	|
+| Educação Física 	| 85    	| 88        	| 95       	|
+
+Escreva um programa no R para calcular a nota final no restante das aulas.
+
+
+```python
+(92 + 87 + 85) / 3 # matemática
+(90 + 81 + 92) / 3 # química
+(84 + 95 + 79) / 3 # redação
+(95 + 86 + 93) / 3 # português 
+(77 + 85 + 90) / 3 # história
+(92 + 90 + 91) / 3 # inglês
+(85 + 88 + 95) / 3 # educação_física
+```
+
+3) Armazene os seguintes valores das notas de cada classe como variáveis. Use os nomes das classes como os nomes das variáveis:
+
+Exemplo:
+```r
+matemática <- 88
+```
+
+```python
+matemática <- 88
+química <- 
+redação <- 
+português  <- 
+história <- 
+inglês <- 
+educação_física <- 
+```
+
+4) Escreva um código para calcular a média final das notas (a média de todas as classes) e armazene a expressão como uma variável chamada **media_final**.
+
+```python
+media_final <- 
+```
+
+5) Crie um vetor contendo as notas finais para cada classe usando os nomes das variáveis. Armazene esse vetor como uma nova variável denominada **nota_final**
+
+```python
+nota_final <-
+```
+
+6) Use a função `mean()` para calcular a média de notas a partir do vetor **nota_final** que criamos anteriormente. Armazene o resultado do seu cálculo na variável **media_final**.
+
+```python
+media_final <- 
+```
+
+7) Use a função `max()` para identificar a nota final mais alta no vetor **nota_final**.
+
+```python
+max() 
+```
+
+8) Use a função `min()` para identificar a nota final mais baixa no vetor **nota_final**.
+
+```python
+min() 
+```
+
+9) Use a função `length()` para calcular o número total de classes.
+
+```python
+length()
+```
