@@ -1,0 +1,8 @@
+---
+title: "Informação das aulas"
+author: "Maxwel Coura Oliveira"
+date: "7/9/2020"
+output: pdf_document
+---
+
+# Colocar aqui o Syllabus
