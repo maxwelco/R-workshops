@@ -10,7 +10,9 @@ output: pdf_document
 
 - Introdução
 
-- O que é o R e o Rstudio?
+- R e o Rstudio?
+
+- Git e GitHub
 
 
 
