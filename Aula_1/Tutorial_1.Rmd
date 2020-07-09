@@ -1,7 +1,6 @@
 ---
-title: "Tutorial_1"
+title: "Tutorial 1 - Introdução"
 author: "Maxwel Coura Oliveira"
-date: "7/9/2020"
 output: pdf_document
 ---
 
@@ -124,6 +123,7 @@ knitr::include_graphics("figures/ScriptConsole.png")
 knitr::include_graphics("figures/github.jpg")
 ```
 
+\newpage
 
 ## O que há de especial em usar R com Git e GitHub?
 
