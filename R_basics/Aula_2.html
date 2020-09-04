@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução a Programação em R para as Ciências Agrárias</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxwel Coura Oliveira" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introdução a Programação em R para as Ciências Agrárias
+## Aula 2
+### Maxwel Coura Oliveira
+### Universidade do Oeste Paulista
+### 2016/12/12 (updated: 2020-09-04)
+
+---
+
+
+# Vamos comerçar a programar!
+
+- **Operadores:** aritmética, atribuição, extração, lógica
+
+- **Funções:** nomes, argumentos, saída
+
+- **Tipos de dados:** classes, vetores, quadros de dados (*data frame*)
+
+
+---
+
+# Operadores
+
+
+|Operadores  | O que faz       |  Simbolo     |
+|--------------	|-----------------	| -----------------
+|Aritmético  |    Matemática em números             |         + - * / ^    |    
+|Atribuição  |    Cria objetos (esquerda) com         |       &lt;-          |             
+|Extração    |    Retire ou substitua parte de um objeto  |    [ ] $   |                           
+|Lógica      |    Compara valores, retorna TRUE/FALSE  | &gt; &lt; == ! %in% &amp; | | 
+
+
+---
+
+# Operadores
+
+
+```r
+2 + 2 #adição
+```
+
+```
+## [1] 4
+```
+
+```r
+8 - 5 #subtração
+```
+
+```
+## [1] 3
+```
+
+```r
+4 * 4 #multiplicação
+```
+
+```
+## [1] 16
+```
+
+```r
+6 / 2 #divisão
+```
+
+```
+## [1] 3
+```
+
+---
+
+# Atribuição
+
+- Salva valor em objeto
+
+  - objeto &lt;- valor
+
+
+```r
+peso_kg &lt;- 55 
+```
+
+
+- Combina com operação aritimetica: 
+
+
+```r
+peso_lb &lt;- 2.2 * peso_kg
+```
+  
+---
+  
+# Funções e argumentos
+
+Uma sequência de instruções que executam uma tarefa. Uma função pode ter muitos comandos, mas no R existem as chamadas *built-in*, que já estão imbutidas no programa
+
+   - Ter nomes
+   
+   - Aceita argumentos (Input - entrada)
+   
+   - Retorna um valor (Output - saída)
+
+
+|Input - entrada       |  Output - saída |
+|-------------------|:------------:|
+|sqrt(9)                    | 3      |
+|round(3.14159)             | 3      |
+|round(x=3.14159), digits=2 | 3      |
+
+ 
+ 
+**Outros exemplos:** `mean()`, `min()`, `max()`
+  
+---
+  
+## Ajuda
+
+Caso tenham dúvidas
+
+
+```r
+?round #abre uma página com a descrição para round na interface "Files'
+```
+
+
+
+```r
+args(round) #mostra os argumentos
+```
+
+```
+## function (x, digits = 0) 
+## NULL
+```
+
+- **Google "R + "nome da função"**
+
+- Outros websites/blogs
+  - [Stack overfolow (Q&amp;A)](https://stackoverflow.com)
+  
+  - [R bloggers (tutorials)](https://www.r-bloggers.com)
+  
+  - [GitHub](https://github.com)
+
+---
+
+# Tipos de dados
+
+- RR adivinha que tipo de dados são armazenados em um objeto
+
+- Tipos básicos:
+  - Numérico (*numeric*)
+  
+  - nominal (*character*)
+  
+  - Lógico (*logical*)
+     
+
+- Pode ser fácil diferenciá-los
+
+---
+
+## Determinando o tipo de dado
+
+- Usamos a função `class()` ou `typeof()`
+
+Examplos:
+
+
+```r
+x &lt;- 32
+class(x)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+x &lt;- "car"
+class(x)
+```
+
+```
+## [1] "character"
+```
+
+
+```r
+x &lt;- TRUE
+class(x)
+```
+
+```
+## [1] "logical"
+```
+
+---
+
+# Estrutura de dados
+
+## Vetores
+
+- Tipo mais comum de estrutura de dados
+
+- Uma série de tipos de dados (ex. numérico)
+
+- Função concatenar: c()}
+
+    **Input**: valores separados por vírgulas
+    
+    **Output**: um objeto vetor
+
+
+```r
+# Exemplo: uma lista com produtividade da soja
+prod_soja &lt;- c(3000, 2890, 3100, 2990) 
+# Exemplo: uma lista com nomes de animais
+cars &lt;- c("cavalo", "touro", "cachorro", "gato")
+```
+
+---
+
+
+## Inspencionando vetores
+
+- Vetores tem caracteristicas:
+  - **Comprimento**: número de valores
+  - **Classe**: tipo de valores
+
+
+```r
+length(prod_soja)
+```
+
+```
+## [1] 4
+```
+
+```r
+class(prod_soja)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+str(prod_soja)
+```
+
+```
+##  num [1:4] 3000 2890 3100 2990
+```
+
+---
+
+
+## Adicionando valores a um vetor
+
+- Use um vetor existente como argumento para c()
+
+- Coloque na ordem em que deseja que eles apareçam na saída vecto
+
+
+```r
+# Adicione um valor no final do vetor
+prod_soja &lt;- c(prod_soja, 3315) 
+```
+
+
+```r
+# Adicione um valor no inicio do vetor
+prod_soja &lt;- c(3050, prod_soja) 
+```
+
+---
+
+
+## Usando funções *built-in* em vetores:
+
+Qual a média de produtividade de soja?
+
+```r
+prod_soja &lt;- c(3050, 3050, 3000, 2890, 3100, 2990, 3315) #produtividade de soja
+
+(3050 + 3050 + 3000 + 2890 + 3100 + 2990 + 3315)/7 #calculando a média (muito trabalhoso desse jeito)
+```
+
+```
+## [1] 3056.429
+```
+
+```r
+mean(prod_soja) #Usando funcões embutidas no programa
+```
+
+```
+## [1] 3056.429
+```
+
+---
+
+
+Qual o valor minimo de produtividade de soja?
+
+```r
+min(prod_soja)
+```
+
+```
+## [1] 2890
+```
+
+Qual o valor máximo de produtividade de soja?
+
+```r
+max(prod_soja)
+```
+
+```
+## [1] 3315
+```
+
+---
+  
+# Fatores
+
+- Representam dados categóricos
+  - Armazenado como números inteiros com rótulos de texto
+  
+  - *Data frames* convertem colunas de caracteres em fatores
+
+- *factor()* - cria um fator
+
+
+- Crie um vetor de nomes de carros
+
+```r
+carros &lt;- c("monza", "chevete", "monza", "chevete")
+class(carros)
+```
+
+```
+## [1] "character"
+```
+
+- Change vector to a factor
+
+```r
+carros &lt;- factor(carros)
+class(carros)
+```
+
+```
+## [1] "factor"
+```
+
+---
+
+## Níveis (levels)
+
+- Texto único de um objeto de fator
+
+- *levels()* - mostra os níveis
+
+- *nlevels()* - mostra o número de níveis
+
+|Função   | Output |
+|--------|:--------:|
+|levels(carros)         | “monza”, “chevete” |
+|nlevels(carros)        | 2                 |
+
+---
+
+## Subconjunto de vetores (*subset*)
+
+- *Subset* por posição
+- *Syntax*: colchetes `[ ]`
+- Combine com `c()`
+
+
+```r
+culturas &lt;- c("milho", "soja", "sorgo", "feijão", "café") 
+```
+
+
+```r
+culturas[2] #Mostra o segundo valor
+```
+
+```
+## [1] "soja"
+```
+
+
+```r
+culturas[c(3,2)]  #Mostra o terceiro e segundo valor
+```
+
+```
+## [1] "sorgo" "soja"
+```
+
+---
+
+
+
+```r
+culturas[c(1,2,3,2,1)] #Mostra valores repetidos
+```
+
+```
+## [1] "milho" "soja"  "sorgo" "soja"  "milho"
+```
+
+
+```r
+culturas[c(1:3)] #Mostra sequencia de valores
+```
+
+```
+## [1] "milho" "soja"  "sorgo"
+```
+
+---
+
+## Expressões lógicas
+
+
+- Faz comparações
+ 
+- Avalia cada elemento em um vetor em relação a um valor
+
+- Output: TRUE ou FALSE
+  - Para cada valor do vetor
+
+---
+
+## Expressões lógicas
+
+|Operador lógico | Significado    |
+|:----------------:|----------------|
+|  &gt;               | Maior que   |   
+|  &lt;               | Menor que      |    
+|  ==              | Igual a       |
+| !=              | Não igual a    |
+| &amp;               | e              |
+| |              | ou            |
+|   !               | não            |
+|   %in%            | Contido em     |
+
+
+
+---
+
+
+## Examplo: expressões lógicas
+
+- Crie uma variável peso
+
+
+```r
+biomassa_g &lt;- c(22.4, 33.7, 37.1, 51.3, 59.9, 45.2)
+```
+
+- Avalia cada elemento do vetor:
+
+```r
+biomassa_h &lt;- biomassa_g &gt; 45
+biomassa_h
+```
+
+```
+## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE
+```
+
+---
+
+# Coerção de classe
+
+- O que acontece se você misturar tipos?
+
+- O R converte para um tipo que funciona para todos os elementos
+
+- Use `class()` para ver o que R escolheu
+
+
+| Tipo      	| as character 	| as numeric 	| as logical 	|
+|-----------	|--------------	|------------	|------------	|
+| logical   	| "TRUE"       	| 1          	| TRUE      	|
+| numeric   	| "35"         	| 35         	| NA         	|
+| character 	| "Paulista"   	| NA         	| NA         	|
+
+
+---
+
+
+##  Subconjunto (*subset*) de vetores
+
+- Mantém o TRUE, elimina o FALSE
+
+- **Input**: uma expressão lógica
+
+- **Output**: um vetor com elementos que correspondem à expressão lógica
+
+- Subconjunto usando vetor TRUE/FALSE
+
+```r
+biomassa_g[biomassa_h]
+```
+
+```
+## [1] 51.3 59.9 45.2
+```
+
+- O mesmo que:
+
+```r
+biomassa_g[biomassa_g&gt;50]
+```
+
+```
+## [1] 51.3 59.9
+```
+
+
+---
+
+# Subconjunto condicional
+
+- Combine vários condicionais
+
+- | = ou (um ou outro)
+
+- &amp; = e (os dois)
+
+- Biomassa abaixo de 30 ou acima de 50:
+
+```r
+biomassa_g[biomassa_g&lt;30 | biomassa_g&gt;50]
+```
+
+```
+## [1] 22.4 51.3 59.9
+```
+
+- Biomassa acima de 30 e abaixo de 50:
+
+```r
+biomassa_g[biomassa_g&gt;30 &amp; biomassa_g&lt;50]
+```
+
+```
+## [1] 33.7 37.1 45.2
+```
+
+---
+
+##  Subconjunto condicional: caracteres (`==`)
+
+- Operador ==} 
+
+- Compara cada valor em um vetor com uma sequência de caracteres
+
+- Combinar com `|` para múltiplos
+
+Make a character vector
+
+
+```r
+plantas &lt;- c("amargoso", "buva", "leiteira", "guanxuma")
+```
+
+Plantas que são buva
+
+
+```r
+plantas[plantas=="buva"]
+```
+
+```
+## [1] "buva"
+```
+Plantas que são buva ou leiteira
+
+
+```r
+plantas[plantas=="buva" | plantas=="leiteira"]
+```
+
+```
+## [1] "buva"     "leiteira"
+```
+
+---
+
+##  Subconjunto condicional: caracteres (`%in%`)
+
+- Operador **%in%** 
+
+- Seleciona elementos do primeiro vetor que estão no segundo vetor
+
+- **Input**: vetor
+
+- **Output**: uma lista de TRUE}/FALSE} 
+
+Quais plantas estão no vetor da mão direita?
+
+
+```r
+plantas %in% c("amargoso", "soja", "trigo", "buva", "tiririca")
+```
+
+```
+## [1]  TRUE  TRUE FALSE FALSE
+```
+
+Retornando os nomes das plantas"
+
+```r
+plantas[plantas %in% c("amargoso", "soja", "trigo", "buva", "tiririca")]
+```
+
+```
+## [1] "amargoso" "buva"
+```
+
+
+---
+
+# Dados ausentes
+
+- NA (not available) - harder to overlook missing data
+
+- Argumento: na.rm = TRUE
+
+
+
+```r
+na.rm = TRUE #Ignores missing data
+```
+
+
+```r
+altura &lt;- c(2.5, 4.4, 4.1, NA, 6.5, 7.5) #um vetor
+```
+
+- Mean of a missing value?
+
+
+```r
+mean(altura)
+```
+
+```
+## [1] NA
+```
+
+- Remove the missing data
+
+
+```r
+mean(altura, na.rm = TRUE)
+```
+
+```
+## [1] 5
+```
+
+
+---
+
+## Removendo dados ausentes
+
+
+- is.na() - Retorna TRUE} se o valor é NA
+
+- complete.cases() - Retorna FALSE} se o valor é NA
+
+- na.omit() - Retorna objeto com os valores ausentes removidos
+
+**Remove NAs 3 ways:**
+
+
+```r
+altura[!is.na(altura)]
+```
+
+```
+## [1] 2.5 4.4 4.1 6.5 7.5
+```
+
+
+
+```r
+altura[complete.cases(altura)]
+```
+
+```
+## [1] 2.5 4.4 4.1 6.5 7.5
+```
+
+
+
+```r
+na.omit(altura)
+```
+
+```
+## [1] 2.5 4.4 4.1 6.5 7.5
+## attr(,"na.action")
+## [1] 4
+## attr(,"class")
+## [1] "omit"
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

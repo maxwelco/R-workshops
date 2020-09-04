@@ -1,0 +1,751 @@
+---
+title: "Data Analysis in R"
+subtitle: "Creating Reproducible Reports using R Markdown"
+author: | 
+  | Maxwel Coura Oliveira
+#  | Postdoctoral Research Associate
+institute: | 
+  | Department of Agronomy
+  | University of Wisconsin-Madison
+output:
+  beamer_presentation:
+    theme: "Berlin"
+    colortheme: "beaver"
+    fonttheme: "structurebold"
+    slide_level: 2
+urlcolor: "blue"
+---
+
+```{r include=FALSE}
+library(tidyverse) 
+library(knitr)
+```
+
+
+## Outline
+
+- What is literate programming?
+\vspace{1cm}
+- Why is it useful?
+\vspace{1cm}
+- How to use R Markdown to create reproducible reports
+  - Text formatting
+  - Code chunks
+  - Output formats
+ 
+
+## Literate programming
+
+\centering human readable **text**
+
+\vspace{0.5cm}
+
+\centering +
+
+\vspace{0.5cm}
+
+\centering machine readable **code** 
+
+\vspace{0.5cm}
+
+\centering =
+
+\vspace{0.5cm}
+
+\centering Reproducible **document**
+ 
+ 
+
+
+## Programs as works of literature
+
+- Developed by Donald Knuth, Stanford University
+\vspace{1cm}
+- \textcolor{blue}{Traditional}: telling a computer what to do
+\vspace{1cm}
+- \textcolor{blue}{Novel}: telling a human what you want the computer to do
+\vspace{1cm}
+- Improves documentation and the programs themselves
+ 
+
+## Literate programming in research
+
+::: columns
+
+:::: column
+
+- Tailor reports to an audience
+\vspace{1cm}
+- Repeatable and assures reproducibility
+\vspace{1cm}
+- Works well with version control
+\vspace{1cm}
+- Works well with languages used in research:
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/jupyter.png")
+``` 
+
+\vspace{0.5cm}
+
+```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/markdown.png")
+``` 
+
+
+::::
+
+:::
+
+
+
+## R Markdown
+
+::: columns
+
+:::: column
+
+- Weave narrative text and code
+  - R
+  - Python 
+  - Stata
+  - SAS
+  
+\vspace{1cm}
+- Produce documents in many formats
+\vspace{1cm}
+- Reproducible
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/rweb.png")
+``` 
+
+
+::::
+
+:::
+
+
+
+
+## Setup
+
+::: columns
+
+:::: column
+
+- Tools > install packages OR install.packages("markdown")
+\vspace{1cm}
+- Install TeX if you want create PDFs
+\vspace{1cm}
+- Open **R** project
+
+::::
+
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/knitr.png")
+``` 
+
+
+::::
+
+:::
+
+
+## Open/Create a markdown document
+
+
+
+::: columns
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/newfile.png")
+``` 
+
+
+::::
+
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/newdoc.png")
+``` 
+
+
+::::
+
+:::
+
+
+## Sections of R Markdown
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/script.png")
+``` 
+
+
+
+
+## Notebook interface
+
+::: columns
+
+:::: column
+
+- Press \textcolor{green}{green} \textcolor{green}{triangle} on a code chunk to run the code and show the output
+ 
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/run.png")
+``` 
+
+
+::::
+
+:::
+
+
+
+
+##  Knit: from text to document
+
+
+::: columns
+
+:::: column
+
+render(input = “name.Rmd”, output = “html_document”)
+\vspace{0.1cm}
+**OR**
+\vspace{0.1cm}
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/html.png")
+``` 
+
+
+
+
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/output.png")
+``` 
+
+
+::::
+
+:::
+
+
+
+##  How it works
+
+
+- knitr package converts the **R Markdown** document to markdown
+\vspace{1cm}
+- \textcolor{red}{Pandoc} converts the markdown document to the final
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/pandoc.png")
+``` 
+
+
+
+## Exercise 1: render the document
+
+- Knit the document
+\vspace{1cm}
+- Delete everything but the header
+\vspace{1cm}
+- knit again
+\vspace{1cm}
+- What changed? Did you run into any trouble?
+ 
+
+
+##  Human readable text
+
+
+::: columns
+
+:::: column
+
+- Outline first, code 
+
+\vspace{1cm}
+
+- Use markdown rich formatting syntax to
+\vspace{1cm}
+- Cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/cheat.png")
+``` 
+
+
+
+::::
+
+:::
+
+##  Exercise 2: write an outline
+
+
+- Look at the cheat sheet document 
+
+\vspace{0.1cm}
+
+- Write the text below in **Rmd** with all numbers in italic and all Braz(s)il names in bold. Also write the text with Brazil as head and Name, Area and Cities as subheading. Source: [Wikipedia](https://en.wikipedia.org/wiki/Brazil)
+
+
+\tiny
+Brazil
+
+Name
+
+"Brazil (Portuguese: Brasil; officially the Federative Republic of Brazil (Portuguese: República Federativa do Brasil is the largest country in both South America and Latin America. 
+
+Area
+
+At 8.5 million square kilometers (3.2 million square miles) and with over 208 million people, Brazil is the world's fifth-largest country by area and the fifth most populous. 
+
+Cities
+
+Its capital is Brasília, and its most populated city is São Paulo. The federation is composed of the union of the 26 states, the Federal District, and the 5,570 municipalities. 
+
+
+\normalsize
+
+
+
+
+
+
+
+
+
+##  Adding code chunks
+
+
+::: columns
+
+:::: column
+
+- Chunk delimiters
+  - beginning: ```{r name}
+    <code>
+    
+\vspace{1cm}
+
+  - end: ```
+\vspace{1cm}
+- Shortkey: Ctrl+Alt+i 
+\vspace{1cm}
+- Editor toolbar
+ 
+
+
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/insert.png")
+``` 
+
+
+
+::::
+
+:::
+
+
+
+##  Setup code block
+
+```
+#load the libraries we need 
+library(tidyverse) 
+library(knitr)
+```
+
+```{r include=FALSE}
+data <- read_csv("control.csv")
+```
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/data.png")
+``` 
+
+
+
+
+
+##  Code chunk options
+
+
+- \textcolor{red}{include} = FALSE
+  + Hide code and results from document 
+  + results can still be used later
+  
+\vspace{0.1cm}
+- \textcolor{red}{echo} = FALSE
+  + hides code, keeps result
+  
+\vspace{0.1cm}
+- \textcolor{red}{message} = FALSE 
+  + hides messages 
+  
+\vspace{0.1cm}
+- \textcolor{red}{warning} = FALSE 
+  + hides warnings
+  
+\vspace{0.1cm}
+- \textcolor{red}{fig.cap} = " " 
+  + adds figure captions
+ 
+
+
+##  Exercise 3: code chunk
+
+
+::: columns
+
+:::: column
+
+- insert a code block called graph
+\vspace{1cm}
+- Add the ggplot code
+\vspace{1cm}
+- Render
+\vspace{1cm}
+- Use options to hide the code
+ 
+
+
+
+::::
+
+:::: column
+
+\scriptsize
+```{r, out.width= '80%', warning=FALSE}
+ggplot(data = data, aes(x = treat,
+y = control, fill = treat)) +
+  geom_bar(stat="summary") +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+
+
+
+::::
+
+:::
+
+
+##  Setting options for all code chunks
+
+- Set default options for all code chunks
+\vspace{1cm}
+- knitr::opts_chunk$set() function
+\vspace{1cm}
+- Put it in your first codeblock
+\vspace{1cm}
+- Must be after you load the rmarkdown package
+
+
+## Tables
+
+
+- Tables look like console output by default
+
+- kable() function makes it pretty
+ 
+
+\scriptsize
+```{r}
+nd <- data %>% 
+  group_by(treat) %>% 
+  summarize(control = mean(control))
+```
+
+```{r}
+kable(nd)
+```
+
+
+##  Inline code
+
+
+
+
+- Syntax `r`
+\vspace{0.5cm}
+- Include in test for responsive text
+\vspace{0.5cm}
+- Allows you to write one report and run it over changing datasets
+\vspace{0.5cm}
+- Example: mean
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/inline.png")
+``` 
+
+
+The mean control of herbicides is `r mean(data$control)`
+
+
+## Change output formats
+
+::: columns
+
+:::: column
+
+
+- select output from knit menu
+\vspace{1cm}
+- Specify output in header
+\vspace{1cm}
+- with render
+ 
+
+::::
+
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/koptions.png")
+``` 
+
+\vspace{0.5cm}
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/yalm.png")
+``` 
+
+\vspace{0.5cm}
+
+```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/render.png")
+``` 
+
+::::
+
+:::
+
+
+
+
+## Parameters
+
+
+
+::: columns
+
+:::: column
+
+
+- Creates custom report without having to change the code chunks
+\vspace{1cm}
+- Add to the header
+\vspace{1cm}
+- Creates a read only list of parameters
+ 
+ 
+
+::::
+
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/params.png")
+``` 
+
+
+
+::::
+
+:::
+
+
+## Subset with parameters
+
+
+::: columns
+
+:::: column
+
+
+- Change the header to add a treat parameter
+
+\vspace{1cm}
+
+- Subset by treat using a filter statement in the setup code chunk
+
+\vspace{1cm}
+
+- Render
+ 
+ 
+
+::::
+
+:::: column
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/params2.png")
+```
+
+
+::::
+
+:::
+
+
+
+## Subset with parameters
+
+
+::: columns
+
+:::: column
+
+
+- params argument
+
+\vspace{0.5cm}
+
+- takes a list
+
+\vspace{0.5cm}
+
+- overrides default in the Rmd
+ 
+ 
+ 
+
+::::
+
+:::: column
+
+```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/render2.png")
+```
+
+
+
+
+::::
+
+:::
+
+
+##  Parameter user interface
+
+::: columns
+
+:::: column
+
+
+- params = “ask”
+\vspace{0.5cm}
+- Opens up a web browser
+\vspace{0.5cm}
+- Select options
+\vspace{0.5cm}
+- Hit save
+\vspace{0.5cm}
+- Doc gets rendered
+
+::::
+
+:::: column
+
+
+
+
+
+
+::::
+
+:::
+
+
+##  Types of parameter input
+
+- Parameterized reports: [Link](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html)
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/params3.png")
+```
+
+
+## More functions
+
+- Customized **YAML** metadata
+\vspace{0.5cm}
+- Presentations
+\vspace{0.5cm}
+- Manuscripts
+
+
+##  Summary
+
+
+- Literate programming makes reproducible research more machine readable
+
+- R markdown documents facilitate literate programming in RStudio
+
+- R markdown has 3 sections
+  - \textcolor{red}{Header}: determines output and adds parameters
+  - \textcolor{red}{Markdown} \textcolor{red}{Text}: can include inline code
+  - \textcolor{red}{Code} \textcolor{red}{chunks}: can be customized to mute code or output
+
+- Parameters help you customize reports
+ 
+
+
+## Need help?
+
+- Email: max.oliveira@wisc.edu
+
+- R markdown cheatsheet: [Link](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-che atsheet.pdf)
+
+- R markdown tutorial: [Link](https://rmarkdown.rstudio.com/lesson-1.html)
+
+
+

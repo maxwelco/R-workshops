@@ -1,0 +1,914 @@
+---
+title: "Documenting and Data Analysis in R"
+subtitle: "Data Wrangling"
+author: "Maxwel Coura Oliveira, PhD"
+date: "University of Wisconsin-Madison"
+output:
+  beamer_presentation:
+    theme: "Berlin"
+    colortheme: "beaver"
+    fonttheme: "structurebold"
+    slide_level: 2
+includes:
+      in_header: mystyle.tex
+urlcolor: "blue"
+---
+
+
+## Outline
+
+- 7 dplyr verbs for data manipulation
+  - \textcolor{red}{select}, \textcolor{red}{filter}, group_by, \textcolor{red}{summarize}, \textcolor{red}{mutate}, \textcolor{red}{count}, \textcolor{red}{arrange}
+  
+- Combining verbs using pipes **%>%**
+  
+- 2 tidyr verbs to reshape your data (\textcolor{red}{spread}, \textcolor{red}{gather})
+ 
+  
+##  Prerequisites
+  
+- Install R and R studio
+  
+  
+- See the R basics lesson if you’re unfamiliar with R or R studio
+
+
+
+##  Create a new R script
+
+::: columns
+
+:::: column
+
+- **File > New File > R script**
+
+- Save it in your project directory
+
+- Look on the top left of the R Studio window to find project directory
+
+::::
+
+:::: column
+
+
+```{r eval=FALSE, fig.align="center", fig.cap="", fig.pos='h', fig.retina=2, include=FALSE, out.width='100%'}
+knitr::include_graphics("figures/rscript.png")
+```
+
+
+::::
+
+:::
+
+
+
+##  What is the tidyverse?
+
+::: columns
+
+:::: column
+
+- Packages for data manipulation
+
+- Built for data tables
+
+- Makes data manipulation easier than in base R
+
+- Combine verbs using pipes
+ 
+::::
+
+:::: column
+ 
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/tidyverse.png")
+```
+ 
+::::
+
+:::
+
+
+##  Installing packages
+
+
+- install.packages()
+
+- Input: package name
+
+- Downloads packages from CRAN (Comprehensive R Archive Network)
+
+- Install once per machine
+
+\scriptsize
+```{r, warning=FALSE}
+#install.packages("tidyverse")
+```
+
+
+## Loading packages
+
+::: columns
+
+:::: column
+
+- \textcolor{red}{library}()
+
+- \textcolor{green}{Input}: package name
+
+- Gives R access to functions in the package
+
+- Load packages every time you restart R
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+library(tidyverse)
+```
+
+
+::::
+
+:::
+
+
+## Data set: orange circunference
+
+::: columns
+
+:::: column
+
+
+- Stored in a \textcolor{blue}{.csv} file
+
+- *Rows*: observations of individual trees
+
+- *Columns*: Variables that describe the experiment
+  - expunit, tree, age, circunference
+  
+::::
+
+:::: column
+
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/orange.png")
+```
+
+
+
+::::
+
+:::
+
+
+##  Import data in tidyverse
+
+
+::: columns
+
+:::: column
+
+
+- *read_csv()* – loads contents of a CSV file
+
+
+- *Input*: a \textcolor{orange}{file} path
+
+
+- *Output* a “tibble”
+
+
+
+::::
+
+:::: column
+
+\scriptsize
+
+```{r include=FALSE}
+orange <- read_csv("orange.csv")
+```
+
+
+```{r}
+read_csv("orange.csv")
+```
+
+::::
+
+:::
+
+##  Why not read.csv()?
+
+
+
+
+- read_csv() is faster
+
+
+
+- Create tibbles
+
+
+
+- More reproducible
+ 
+
+
+
+
+\begin{table}[]
+\centering
+\label{tab:my-table}
+\begin{tabular}{ll}
+\hline
+Data frame           & Tibble                       \\ \hline
+Strings to factors   & Keeps character              \\
+Has row names        & No row names                 \\
+Changes column names & Keeps column nas as they are \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+## dplyr verbs
+
+::: columns
+
+:::: column
+
+- First argument is always a table 
+  - Tibble or data frame
+
+- Output is a new table
+
+- Doesn’t change input data
+  - Must save the output using <-
+  
+
+::::
+
+:::: column
+  
+new_df <- verb(old_df, ... )
+
+\vspace{1cm}  
+
+\textcolor{blue}{OR}
+
+\vspace{1cm} 
+
+old_df <- verb(old_df, ... )
+
+
+
+::::
+
+:::
+
+##  select()
+
+::: columns
+
+:::: column
+
+- Selects columns from a data frame
+
+- Input: data and columns to be kept
+
+- Output: data with only the specified columns
+
+\tiny
+```{r}
+select(orange, age)
+```
+
+
+::::
+
+:::: column
+
+
+**Same as**
+
+
+\tiny
+```{r}
+tibble(orange$age)
+```
+
+
+::::
+
+:::
+
+
+## filter()
+
+::: columns
+
+:::: column
+
+- Choose rows based on values of a variable
+
+- **Input**: data and a logical expression (returns true/false)
+  - <, >, >=, <=, ==, !=
+
+- **Output**: data with rows that match the expression
+
+::::
+
+:::: column
+
+\tiny
+```{r}
+filter(orange, tree == "1")
+```
+**Same as**
+
+\tiny
+```{r}
+orange[orange$tree == "1",]
+```
+
+
+::::
+
+:::
+
+
+## Pipe operator %>%
+
+
+::: columns
+
+:::: column
+
+- Combine multiple verbs
+
+- Syntax: %>% at the end of the line
+
+- Output of the first line becomes input of next line, etc.
+
+- Say it out loud as “then”
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+orange %>% 
+  filter(circumference >200) %>% 
+     select(tree, circumference)
+```
+
+
+::::
+
+:::
+
+##  Exercise #1: practice pipes
+
+- Using pipes, subset the \textcolor{orange}{orange} data to include
+  
+  - individuals of **age** lower than 600 and
+  
+  - retain only the columns **tree** and **age**
+
+
+
+##  mutate()
+
+::: columns
+
+:::: column
+
+- Creates a new column
+
+- \textcolor{green}{Input}: data and the definition of a new column
+  
+  -col_name \textcolor{blue}{=} <value>
+
+- \textcolor{purple}{Output}: data with a new column
+
+\tiny
+```{r}
+mutate(orange,
+       circ_cm = circumference / 100)
+```
+
+::::
+
+:::: column
+
+
+
+**Same as**
+
+\tiny
+```{r}
+orange %>% 
+  mutate(circ_cm = circumference / 100)
+```
+
+::::
+
+:::
+
+
+
+##  Exercise 2: data frame challenge
+
+- Create a new data frame from the survey data that meets the following criteria:
+ 
+  1. contains only the \textcolor{red}{tree} column and a new column called **circ_half**
+  
+  2. **circ_half** contains values that are half the \textcolor{red}{circumference} values.
+ 
+  3. Only include \textcolor{red}{age} greater than 500
+
+
+-  **Hint**: think about how the commands should be ordered to produce this data frame!
+ 
+
+
+## Creating a summary table
+
+::: columns
+
+:::: column
+
+- \textcolor{red}{summarize}()
+ 
+- \textcolor{green}{Input}: data and a summary statistic
+
+  - Eg: \textcolor{red}{mean}()
+  
+  - \textcolor{green}{na.rm} = TRUE
+
+- \textcolor{purple}{Output}: a table with the calculated summary statistic
+
+::::
+
+:::: column
+
+\tiny
+```{r}
+orange %>% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+
+
+::::
+
+:::
+
+## Creating a grouped summary table
+
+::: columns
+
+:::: column
+
+- **group_by()**
+ 
+- \textcolor{green}{Input}: data and a variable
+
+- \textcolor{purple}{Output}: a table with the calculated summary statistic for each unique value in the variable
+
+::::
+
+:::: column
+
+\tiny
+```{r}
+orange %>% 
+  group_by(tree) %>% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+
+
+::::
+
+:::
+
+
+## Removing missing values
+
+::: columns
+
+:::: column
+
+- **is.na()**
+  - missing = \textcolor{green}{TRUE}
+  - not missing = \textcolor{red}{FALSE}
+
+
+- \textcolor{green}{Input}: a column
+
+- \textcolor{purple}{Output}: logical vector
+
+- Use it as input to \textcolor{blue}{filter}()
+
+::::
+  
+:::: column
+
+\tiny
+```{r}
+orange %>% 
+  filter(!is.na(circumference)) %>%
+  group_by(tree) %>% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+
+::::
+
+:::
+
+
+## count()
+
+::: columns
+
+:::: column
+
+- Count the number of observations
+
+- \textcolor{green}{Input}:
+  - categorical variable
+  
+- **sort** = TRUE: sorts the results
+
+- \textcolor{purple}{Output}: a table with a row for each categorical variable and a column called n with counts
+
+
+
+::::
+  
+:::: column
+
+\tiny
+```{r}
+orange %>% 
+  count(tree)
+```
+
+Same as 
+
+\tiny
+```{r}
+orange %>% 
+  group_by(tree) %>% 
+  summarize(count=n())
+```
+
+
+::::
+  
+:::
+
+
+
+## arrange()
+
+
+
+::: columns
+
+:::: column
+
+- Order results in ascending order
+
+- \textcolor{green}{Input}:
+  - A variable
+  - Use \textcolor{red}{desc}() to put them in descending order
+
+- \textcolor{purple}{Output}: A table ordered by the values of the input column
+
+
+
+::::
+  
+:::: column
+
+\tiny
+```{r}
+orange %>% 
+  group_by(tree) %>% 
+  arrange(desc(circumference))
+```
+
+::::
+  
+:::
+
+
+
+##  Exercise 3
+
+
+1 - Use **group_by()** and \textcolor{blue}{summarize}() to find the \textcolor{orange}{mean}(), \textcolor{orange}{min}(), and \textcolor{orange}{max}() \textcolor{purple}{circumference} (mm) for each \textcolor{purple}{tree}.
+
+
+```{r eval=FALSE, include=FALSE}
+library(tidyverse)
+
+orange %>% 
+  group_by(tree) %>% 
+  summarise(media = mean(circumference), min = min(circumference), max = max(circumference))
+```
+
+
+2 - **Bonus**: How many days passed from the fist to the last circumference measurement?
+
+```{r eval=FALSE, include=FALSE}
+orange %>% 
+  group_by(tree) %>% 
+  summarise(dias = max(age) -  min(age))
+```
+
+## Reshaping data with tidyr
+
+::: columns
+
+:::: column
+
+- The shape of your data affects what you can do with it
+
+- **Example**: compare the mean \textcolor{blue}{circumference} of each tree adding a new column (High or Low) \textcolor{blue}{circumference} size
+
+::::
+  
+:::: column
+
+\tiny
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/orange.png")
+```
+
+::::
+  
+:::
+
+
+
+
+## Exercise 
+
+::: columns
+
+:::: column
+
+- Create a table with columns for \textcolor{purple}{tree} and \textcolor{purple}{circunference} and **mean** circunference. Add a logical parameter for \textcolor{purple}{circunference}, *>* 100 (High) or *<* 100 (Low)
+
+- Save to a new object called **orange_nd**
+
+::::
+  
+:::: column
+
+\tiny
+
+
+```{r}
+orange_nd <- orange %>% 
+  select(tree, circumference) %>%
+  mutate(size = factor(1*(circumference > 100), 
+               labels = c("Low", "High"))) %>% 
+  group_by(size, tree) %>% 
+  summarise(mean_cir = mean(circumference))
+  
+orange_nd
+```
+
+
+
+::::
+  
+:::
+
+
+## Tidy Data
+
+
+::: columns
+
+:::: column
+
+1) Each variable has its own column
+
+2) Each observation has its own row
+
+3) Each value has its own cell
+
+4) Each type of observational unit forms a table
+ 
+
+
+::::
+  
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/tidying.png")
+```
+
+::::
+  
+:::
+
+## Reshaping data with tidyr
+
+
+::: columns
+
+:::: column
+
+- \textcolor{blue}{Spreading}: makes a wider table
+  - Unique values in a specified column (key) become variable names
+
+- \textcolor{blue}{Gathering}: makes a longer table
+  - Variable names become values in a new column (key)
+
+
+::::
+  
+:::: column
+
+\tiny
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/tidyr.png")
+```
+
+::::
+  
+:::
+
+
+## spread()
+
+
+::: columns
+
+:::: column
+
+- use it when an observation is scattered across multiple rows
+
+- \textcolor{orange}{Input}:
+  - \textcolor{orange}{data} (a tibble)
+  - \textcolor{orange}{key} column (values become new column names)
+  - \textcolor{orange}{value} column (to fill new column variables)
+
+- \textcolor{purple}{Output}: a table with columns for each value of sex
+
+
+
+::::
+  
+:::: column
+
+\tiny
+
+```{r}
+orange_spread <- orange_nd %>% 
+  spread(key = tree,
+         value = mean_cir)
+
+orange_spread
+```
+
+
+::::
+  
+:::
+
+
+## Spread
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/table.png")
+```
+
+
+## gather()
+
+::: columns
+
+:::: column
+
+- Use when column names are not names of variables, but values of a variable
+
+- Input:
+  - \textcolor{green}{data} (a tibble)
+  - \textcolor{green}{key} column (created from col names)
+  - values column (fill the key variable)
+  - A range of columns to gather
+
+- \textcolor{purple}{Output}: a long tibble
+
+
+::::
+  
+:::: column
+
+
+\tiny
+
+```{r, warning=FALSE}
+orange_gather <- orange_spread %>% 
+  gather(key = tree,
+         value = mean_cir, "1":"2":"3":"4":"5")
+
+orange_gather
+```
+
+
+::::
+  
+:::
+
+
+
+## Gather
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/table2.png")
+```
+
+
+## Exercise 4
+
+
+- Spread the **orange_nd** data frame with \textcolor{red}{size} as columns, \textcolor{red}{tree} as rows, and the **mean_cir** per plot as the values. 
+
+```{r eval=FALSE, include=FALSE}
+orange_nd <- orange_nd %>% 
+  spread(key = size,
+         value = mean_cir)
+```
+
+
+
+## write_csv
+
+::: columns
+
+:::: column
+
+- Writes a data table to a file
+
+- \textcolor{green}{Input}: a tibble, a file path
+
+-  \textcolor{purple}{Output}: a file at the specified file path
+
+
+::::
+  
+:::: column
+
+
+\scriptsize
+```{r}
+write_csv(orange_nd,
+          path = "orange2.csv")
+```
+
+
+::::
+  
+:::
+
+
+## Need help
+
+- **Email**: max.oliveira@wisc.edu
+
+- Github repository: [Link](https://github.com/maxwelco/UNOESTE)
+
+
+- Data Wrangling cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+
+- Thanks to Data Camp for sharing slides
+
+

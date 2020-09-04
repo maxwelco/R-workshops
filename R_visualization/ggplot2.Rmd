@@ -1,0 +1,1364 @@
+---
+title: "Documenting and Data Analysis in R"
+subtitle: "Data Visualization"
+author: "Maxwel Coura Oliveira, PhD"
+date: "University of Wisconsin-Madison"
+output:
+  beamer_presentation:
+    theme: "Berlin"
+    colortheme: "beaver"
+    fonttheme: "structurebold"
+    slide_level: 2
+includes:
+      in_header: mystyle.tex
+urlcolor: "blue"
+---
+
+```{r include=FALSE}
+library(tidyverse)
+```
+
+
+
+## Outline
+
+- Why \textcolor{blue}{ggplot2}
+
+- Basic elements (data, aesthetics, geoms)
+
+- Modifications (transparency, color, grouping, themes) 
+
+- Exporting plots (ggsave)
+
+
+##  Prerequisites
+  
+- Install R and R studio
+  
+  
+- See the R basics lesson if you’re unfamiliar with R or R studio
+
+
+
+##  Why ggplot2?
+
+
+::: columns
+
+:::: column
+
+- Reproducibility
+
+- Part of the tidyverse
+
+- Pretty by default
+
+- Customizable
+ 
+::::
+
+:::: column
+ 
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/tidyverse.png")
+```
+ 
+::::
+
+:::
+
+
+## Data set: CO2
+
+::: columns
+
+:::: column
+
+- The CO2 uptake of six plants from Quebec and six plants from Mississippi was measured at several levels of ambient CO2 concentration. Half the plants of each type were chilled overnight before the experiment was conducted.
+
+
+  
+::::
+
+:::: column
+
+- Stored in a \textcolor{blue}{.csv} file
+
+- *Rows*: observations of individual animals
+
+- *Columns*: Variables that describe the experiment
+  - Plant, Type, Treatment, conc, and uptake
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/co2.png")
+```
+
+
+
+::::
+
+:::
+
+
+
+
+## Setup environment
+
+::: columns
+
+:::: column
+
+
+- Check if tidyverse is installed 
+
+- Will automatically load if it’s installed
+
+- If not, install and load it
+
+- Read the data into an object called \textcolor{purple}{CO2}
+
+
+::::
+
+:::: column
+
+\tiny
+```{r, warning=FALSE}
+#install.packages("tidyverse") #install if needed
+```
+
+\tiny
+```{r}
+library(tidyverse)
+```
+
+\tiny
+```{r}
+CO2 <- read_csv("gas.csv")
+```
+
+
+::::
+
+:::
+
+## ggplot2 makes modular plots
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/ggplot.png")
+```
+
+
+## “Grammar” of ggplot2 graphics
+
+::: columns
+
+:::: column
+
+
+- \textcolor{blue}{data}: the data you want to plot
+
+- \textcolor{blue}{Aesthetic} mappings: mapping variables to axes
+
+- \textcolor{blue}{geoms}: how you want the data to be drawn
+  - Ex: points, lines, bars
+ 
+::::
+
+:::: column
+
+- ggplot(): creates a ggplot object
+
+-  aes(): draws axes based on arguments
+
+- geom_XXX(): draws points/lines et
+
+- **+**: adds components to plot 
+  - Modular structure
+ 
+
+::::
+
+:::
+
+
+## Example 
+
+```{r include=FALSE}
+orange <-read_csv("orange.csv")
+```
+
+- Orange dataset from previous examples (data wrangling)
+
+```{r echo=FALSE, out.width= '80%', fig.align='center'}
+library(datasets)
+orange$tree <- factor(orange$tree)
+ggplot(orange, aes(x=age, y=circumference, color=tree)) + geom_point() +  theme_bw()
+```
+
+
+## Plotting data
+
+
+::: columns
+
+:::: column
+
+
+- ggplot():
+  - data table to plot
+  - mapping = aes() function
+  - x axis variable
+  - y axis variable
+
+- geom() - what to draw data as
+ 
+::::
+
+:::: column
+
+
+```{r, out.width= '80%', fig.align='center'}
+ggplot(data=CO2, 
+       aes(x=conc, y=uptake)) +
+  geom_point()
+```
+
+ 
+
+::::
+
+:::
+
+
+## Modifying ggplots
+
+::: columns
+
+:::: column
+
+- color and transparency
+
+- Other geoms
+
+- Themes
+
+
+::::
+
+:::: column
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/multiple.png")
+``` 
+
+
+
+
+::::
+
+:::
+
+
+## Specifying data
+
+::: columns
+
+:::: column
+
+- ggplot(): Creates a plot object
+
+- **Input**: data table
+
+- **Output**: blank plot
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(data = CO2)
+```
+
+
+::::
+
+:::
+
+
+
+## Aesthetic mappings
+
+
+::: columns
+
+:::: column
+
+- Draw the axes
+
+- **Input**:
+  - \textcolor{green}{mapping} argument 
+  - \textcolor{red}{aes}() function
+    - \textcolor{green}{x} = x axis variable 
+    - \textcolor{green}{y} = y axis variable
+
+- **Output**: plot with axes, no data
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake))
+```
+
+
+::::
+
+:::
+
+
+## Geometries
+
+::: columns
+
+:::: column
+
+- *geom_point()*: draws data points
+
+- **Input**: *geom_* function
+  - requires \textcolor{blue}{+} operator
+  - Whitespace matters
+
+- **Output**: scatterplot
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake)) +
+  geom_point()
+```
+
+
+::::
+
+:::
+
+
+## Modifying ggplots
+
+::: columns
+
+:::: column
+
+- **Color and transparency**
+
+- Other geoms
+
+- Themes
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake, 
+                color=Plant)) +
+  geom_point()
+```
+
+::::
+
+:::: column
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Plant, y=uptake, 
+                fill=Plant)) +
+  geom_boxplot() + theme_classic() +
+  theme(legend.position="none")
+```
+
+
+
+::::
+
+:::
+
+
+## Add transparency
+
+::: columns
+
+:::: column
+
+- Add argument to geom_point()
+
+- Reduce transparency of points
+
+- **Input**: \textcolor{red}{alpha} = 0.1 
+  - 1/10 opacity
+  - Range: 0-1
+
+
+::::
+
+:::: column
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake)) +
+  geom_point(alpha=0.1) 
+```
+
+
+
+::::
+
+:::
+
+
+
+## Add color
+
+::: columns
+
+:::: column
+
+- Change point colors to blue
+
+- **Input**: color argument
+  - Color reference chart: [Link](http://sape.inf.usi.ch/quick-refe rence/ggplot2/colour)
+  - **Output**: blue points
+
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake)) +
+  geom_point(alpha=0.5, color="blue") 
+```
+
+
+
+::::
+
+:::
+
+
+## Add color by Type (location)
+
+::: columns
+
+:::: column
+
+- Color points by variable
+
+- Input: \textcolor{green}{color} = <factor variable>
+
+- Must be inside \textcolor{red}{aes}()
+  - Anything that references the dataset
+  - Like x and y variables
+
+- **Output**: a colored plot
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=conc, y=uptake)) +
+  geom_point(alpha=0.5, 
+      aes(color=Type))
+```
+
+
+
+::::
+
+:::
+
+
+## Exercise 1
+
+- Use the previous example as a starting point.
+
+- Add color to the data points according to the plant from which the sample was taken (\textcolor{green}{Plant}).
+
+
+
+## Modifying ggplots
+
+
+::: columns
+
+:::: column
+
+- Color and transparency
+
+- **Other geoms**
+  - For categorical data
+  - For time series data
+
+- **Themes**
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r, echo=FALSE, fig.cap="", out.width = '110%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/multiple.png")
+```
+
+
+
+::::
+
+:::
+
+
+## Plotting categories
+
+::: columns
+
+:::: column
+
+- geom_point doesn’t work for
+everything
+  - Overplotted
+  - How can we spread out the data?
+
+- Use a different geom:
+  - geom_jitter()
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Type, y=uptake)) +
+  geom_point()
+```
+
+
+
+
+::::
+
+:::
+
+
+
+## Geom jitter
+
+
+
+::: columns
+
+:::: column
+
+- geom_jitter() - spreads out the points
+
+- Better but still overplotted
+
+- What kind of plot does this look like?
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Type, y=uptake)) +
+  geom_jitter(alpha=0.8)
+```
+
+
+
+
+::::
+
+:::
+
+## Box plots
+
+::: columns
+
+:::: column
+
+- Categorical vs. numeric
+
+- geom_boxplot() - draws a boxplot
+  - \textcolor{purple}{Median} - middle line
+  - \textcolor{red}{Quartiles} - edge of box
+  - \textcolor{green}{Outliers} - points outside the box
+
+- Shows the spread of the data better
+
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Type, y=uptake)) +
+  geom_boxplot()
+```
+
+
+::::
+
+:::
+
+
+## Layering geoms
+
+::: columns
+
+:::: column
+
+- Use the \textcolor{blue}{+} operator to overlay geoms
+
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Type, y=uptake)) +
+  geom_boxplot() +
+  geom_jitter(alpha=0.5,
+              color="tomato")
+```
+
+::::
+
+:::
+
+
+
+## Order matters
+
+
+::: columns
+
+:::: column
+
+
+- \textcolor{red}{Reverse} order of the geoms
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r}
+ggplot(data = CO2,
+  mapping = aes(x=Type, y=uptake)) +
+  geom_jitter(alpha=0.5,
+              color="tomato") +
+  geom_boxplot() 
+```
+
+::::
+
+:::
+
+
+## Exercise 2: Violin plot
+
+
+- Plot the same data as in the previous example, but as a Violin plot
+
+  - \textcolor{red}{Hint}: see *geom_violin()*.
+ 
+- What information does this give you about the data that a box plot does?
+ 
+
+## Plotting over time
+
+::: columns
+
+:::: column
+
+
+
+- Visualize trends over time
+
+- Usually a summary statistic
+
+- Likely need to reshape data
+
+- Consider which variables you need to build the plot
+
+::::
+
+:::: column
+
+```{r include=FALSE}
+phones <- read_csv("phones.csv")
+```
+
+
+\scriptsize
+
+```{r echo=FALSE}
+ggplot(data = phones,
+  mapping = aes(x=year, y=number, group=location)) +
+  geom_line(aes(col=location))
+```
+
+::::
+
+:::
+
+## Time series data
+
+::: columns
+
+:::: column
+
+
+
+- Load the dataset \textcolor{red}{phones}
+
+- Dataset: Number of telephones in each continent from 1951 to 1961
+
+
+::::
+
+:::: column
+
+
+
+\scriptsize
+```{r warning=FALSE}
+phones <- read_csv("phones.csv")
+phones
+```
+
+::::
+
+:::
+
+
+## Time series data
+
+
+::: columns
+
+:::: column
+
+
+
+- Use geom_line()
+
+- Input to ggplot()
+  - data = phones
+  - x = year
+  - y = number (# observations)
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r }
+ggplot(data = phones,
+  mapping = aes(x=year, 
+  y=number)) +
+  geom_line()
+```
+
+::::
+
+:::
+
+
+
+## group by location
+
+
+::: columns
+
+:::: column
+
+
+
+- Create a line for each location
+
+- **Input** 
+  - aes() argument: \textcolor{green}{group}
+
+- But what line is what location?
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r }
+ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+  group=location)) +
+  geom_line()
+```
+
+::::
+
+:::
+
+
+
+
+## Create a legend
+
+
+::: columns
+
+:::: column
+
+
+
+- Add color to autogenerate a legend
+
+
+- aes() argument: \textcolor{green}{color}
+
+- Can use **group_by** and \textcolor{green}{color} separately
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r}
+ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+  color=location)) +
+  geom_line()
+```
+
+::::
+
+:::
+
+
+## Save ggplots to a variable
+
+
+::: columns
+
+:::: column
+
+
+
+- Saves ggplot as a list
+
+- To render a saved plot, send the name of the plot to the console
+
+- Can add to the plot or use it to export the plot to a file
+
+::::
+
+:::: column
+
+
+
+
+\scriptsize
+
+```{r}
+lineplot <- ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+  color=location)) +
+  geom_line()
+
+lineplot
+```
+
+::::
+
+:::
+
+
+## Creating publication quality graphs
+
+
+::: columns
+
+:::: column
+
+- lineplot
+
+```{r echo=FALSE}
+ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+        color=location)) +
+  geom_line()
+```
+
+::::
+
+:::: column
+
+
+- lineplot + theme_XX()
+
+\scriptsize
+```{r echo=FALSE}
+ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+  color=location)) +
+  geom_line() + theme_bw() + 
+  labs(y="Number of phones", x="Year",
+  title="Telephones in the world")
+```
+
+::::
+
+:::
+
+
+
+
+## Applying pre-made themes
+
+
+::: columns
+
+:::: column
+
+- Premade
+  - Ex: theme_bw()
+  - List of themes in \textcolor{red}{help} (?theme)
+  
+- Apply theme using **+** operator
+  
+::::
+
+:::: column
+
+
+- lineplot + theme_XX()
+
+\scriptsize
+
+
+
+```{r}
+linebw <- lineplot + theme_bw() 
+linebw
+```
+
+::::
+
+:::
+
+
+
+## Customize axis labels
+
+
+::: columns
+
+:::: column
+
+- Default: variable names as axis labels
+  
+- labs() - specify labels 
+  - \textcolor{green}{title}: plot title
+  - \textcolor{green}{x}: x axis label
+  - \textcolor{green}{y}: y axis label
+
+
+- Provides more descriptive text
+  
+::::
+
+:::: column
+
+
+
+\scriptsize
+
+
+
+```{r}
+new_fig <- linebw + 
+  labs(y="Number of phones", x="Year", 
+       title="Telephones in the world")
+new_fig
+```
+
+::::
+
+:::
+
+
+
+## Customize font size
+
+
+::: columns
+
+:::: column
+
+- *theme()* - fine adjustments to the theme
+  - Used with theme elements
+  - Ex: text size
+
+- *element_text()*
+  - size - text size
+  - family - font
+  
+- ?margin for more \textcolor{green}{ggplot} theme elements
+  
+::::
+
+:::: column
+
+
+\scriptsize
+
+```{r}
+new_fig <- new_fig + 
+theme(text=element_text(size=16))
+
+new_fig
+```
+
+::::
+
+:::
+
+## Create your own theme
+
+
+- Save your theme to a list object
+
+- Can be applied to any plot
+
+- Make sure to include theme elements only, not geoms etc.
+
+
+```{r}
+theme_nd <- theme_bw() +
+theme(text = element_text(size=16)) 
+# add font="Arial"
+```
+
+## Apply your theme
+
+\scriptsize
+```{r, out.width='60%', fig.align='center'}
+box <- ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+    color=location)) +
+  geom_boxplot() + theme_nd 
+
+box
+```
+
+
+## Arranging plots
+
+::: columns
+
+:::: column
+
+- No function in ggplot2
+
+- Use the \textcolor{red}{cowplot} library
+
+- plot_grid()
+  - Plots to arrange
+  - Ncols - number of columns
+  - Labels 
+
+- See ?plot_grid
+
+\tiny
+```{r}
+library(cowplot)
+```
+
+  
+::::
+
+:::: column
+
+
+\scriptsize
+
+```{r }
+
+plot_grid(new_fig, box,
+          ncol=2, 
+          labels =c("A", "B"))
+```
+
+::::
+
+:::
+
+
+
+## Arranging plots
+
+::: columns
+
+:::: column
+
+- Plot window > Export
+
+- ggsave(): saves plot to a file
+  - \textcolor{red}{filename} - name of new file 
+  - \textcolor{red}{plot} - plot to be saved
+  - \textcolor{red}{device} - output format
+  - \textcolor{red}{units} - units for output dimensions 
+  - \textcolor{red}{width} - width of output
+  - \textcolor{red}{height} - height of output 
+  
+::::
+
+:::: column
+
+
+```{r}
+ggsave(filename = "name.png", 
+plot = box, device = "png",
+units = "in", width = 15, 
+height = 10)
+```
+
+
+
+
+::::
+
+:::
+
+
+
+## Facetting
+
+::: columns
+
+:::: column
+
+- Split one plot into many based on a factor
+
+- facet_XXX() - specify layout of panels
+
+- **~** - formula 
+
+- x **~** y
+  
+::::
+
+:::: column
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("figures/facet.png")
+``` 
+
+
+
+
+::::
+
+:::
+
+
+
+## Facetting
+
+::: columns
+
+:::: column
+
+- Facet on one variable
+
+- *facet_wrap()* - wraps panels horizontally, Fits to the screen
+
+- Argument: **~** y
+  
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(phones, aes(x=year, y=number,
+  group=location)) +
+  geom_line() +
+  facet_wrap(~location)
+```
+
+
+
+
+::::
+
+:::
+
+
+##  Color by location
+
+::: columns
+
+:::: column
+
+- Adds dimensionality to the plot
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_wrap(~location)
+```
+
+::::
+
+:::
+
+
+
+##  Facet grid
+
+::: columns
+
+:::: column
+
+- Specify your layout
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_grid(location ~ .)
+```
+
+::::
+
+:::
+
+
+
+##  Facet grid
+
+::: columns
+
+:::: column
+
+- Change orientation
+
+::::
+
+:::: column
+
+\scriptsize
+```{r}
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_grid(.~location)
+```
+
+::::
+
+:::
+
+
+
+## Need help
+
+- **Email**: max.oliveira@wisc.edu
+
+- Github repository: [Link](https://github.com/maxwelco/UNOESTE)
+
+- Data Visualization cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+
+- Thanks to Data Camp for sharing slides
+
+
+

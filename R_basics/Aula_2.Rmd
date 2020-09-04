@@ -1,39 +1,41 @@
 ---
-title: "Começando a programar"
+title: "Introdução a Programação em R para as Ciências Agrárias"
+subtitle: "Aula 2"
 author: "Maxwel Coura Oliveira"
-date: "7/8/2020"
+institute: "Universidade do Oeste Paulista"
+date: "2016/12/12 (updated: `r Sys.Date()`)"
 output:
-  pdf_document: default
-  html_document: default
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
 ---
 
 # Vamos comerçar a programar!
 
-- Operadores: aritmética, atribuição, extração, lógica
+- **Operadores:** aritmética, atribuição, extração, lógica
 
-- Funções: nomes, argumentos, saída
+- **Funções:** nomes, argumentos, saída
 
-- Tipos de dados: classes, vetores, quadros de dados (*data frame*)
+- **Tipos de dados:** classes, vetores, quadros de dados (*data frame*)
 
 
+---
 
 # Operadores
 
-\begin{table}[ht!]
-\centering
-\label{tab:my-table}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{ccc}
-\hline
-\textbf{Operadores} & \textbf{What it does}                 & \textbf{Simbolo}                         \\ \hline
-Aritmético      & Matemática em números                     & + - * / \textasciicircum{}              \\
-Atribuição      & Cria objetos (esquerda) com               & \textless{}-                            \\
-Extração        & Retire ou substitua parte de um objeto     & {[} {]} \$                              \\
-Lógica          & Compara valores, retorna TRUE/FALSE       & \textgreater \textless == ! \%in\% \& | \\ \hline
-\end{tabular}%
-}
-\end{table}
 
+|Operadores  | O que faz       |  Simbolo     |
+|--------------	|-----------------	| -----------------
+|Aritmético  |    Matemática em números             |         + - * / ^    |    
+|Atribuição  |    Cria objetos (esquerda) com         |       <-          |             
+|Extração    |    Retire ou substitua parte de um objeto  |    [ ] $   |                           
+|Lógica      |    Compara valores, retorna TRUE/FALSE  | > < == ! %in% & | | 
+
+
+---
 
 # Operadores
 
@@ -44,41 +46,49 @@ Lógica          & Compara valores, retorna TRUE/FALSE       & \textgreater \tex
 6 / 2 #divisão
 ```
 
+---
 
 # Atribuição
 
 - Salva valor em objeto
-  - \textcolor{purple}{objeto} \textcolor{blue}{<-} \textcolor{brown}{valor}
-  - peso_kg \textcolor{blue}{<-} 55 
+
+  - objeto <- valor
+
+```{r}
+peso_kg <- 55 
+```
 
 
 - Combina com operação aritimetica: 
-  - peso_lb \textcolor{blue}{<-} 2.2 * peso_kg
+
+```{r}
+peso_lb <- 2.2 * peso_kg
+```
   
-  
+---
   
 # Funções e argumentos
 
-Uma sequência de instruções que executam uma tarefa. Uma função pode ter muitos comandos, mas no R existem as chamadas 'built-in', que já estão imbutidas no programa.
+Uma sequência de instruções que executam uma tarefa. Uma função pode ter muitos comandos, mas no R existem as chamadas *built-in*, que já estão imbutidas no programa
 
    - Ter nomes
+   
    - Aceita argumentos (Input - entrada)
+   
    - Retorna um valor (Output - saída)
 
-\begin{table}[ht!]
-\centering
-\begin{tabular}{cc}
-\hline
-\textbf{Input - entrada}                     & \textbf{Output - saída} \\ \hline
-sqrt(9)                    & 3      \\
-round(3.14159)             & 3      \\
-round(x=3.14159), digits=2 & 3      \\ \hline
-\end{tabular}
-\end{table}
+
+|Input - entrada       |  Output - saída |
+|-------------------|:------------:|
+|sqrt(9)                    | 3      |
+|round(3.14159)             | 3      |
+|round(x=3.14159), digits=2 | 3      |
+
  
  
-Outros exemplos: `mean()`, `min()`, `max()`
+**Outros exemplos:** `mean()`, `min()`, `max()`
   
+---
   
 ## Ajuda
 
@@ -97,9 +107,12 @@ args(round) #mostra os argumentos
 
 - Outros websites/blogs
   - [Stack overfolow (Q&A)](https://stackoverflow.com)
-  - [R bloggers (tutorials)](https://www.r-bloggers.com)
-  - [GitHub](https://github.com)
   
+  - [R bloggers (tutorials)](https://www.r-bloggers.com)
+  
+  - [GitHub](https://github.com)
+
+---
 
 # Tipos de dados
 
@@ -107,11 +120,15 @@ args(round) #mostra os argumentos
 
 - Tipos básicos:
   - Numérico (*numeric*)
+  
   - nominal (*character*)
+  
   - Lógico (*logical*)
      
 
 - Pode ser fácil diferenciá-los
+
+---
 
 ## Determinando o tipo de dado
 
@@ -133,7 +150,7 @@ x <- TRUE
 class(x)
 ```
 
-
+---
 
 # Estrutura de dados
 
@@ -143,7 +160,7 @@ class(x)
 
 - Uma série de tipos de dados (ex. numérico)
 
-- Função concatenar: \textcolor{red}{c()}
+- Função concatenar: c()}
 
     **Input**: valores separados por vírgulas
     
@@ -155,6 +172,9 @@ prod_soja <- c(3000, 2890, 3100, 2990)
 # Exemplo: uma lista com nomes de animais
 cars <- c("cavalo", "touro", "cachorro", "gato")
 ```
+
+---
+
 
 ## Inspencionando vetores
 
@@ -172,7 +192,10 @@ class(prod_soja)
 ```{r}
 str(prod_soja)
 ```
-  
+
+---
+
+
 ## Adicionando valores a um vetor
 
 - Use um vetor existente como argumento para c()
@@ -189,7 +212,10 @@ prod_soja <- c(prod_soja, 3315)
 prod_soja <- c(3050, prod_soja) 
 ```
 
-## Usando funções `built-in` em vetores:
+---
+
+
+## Usando funções *built-in* em vetores:
 
 Qual a média de produtividade de soja?
 ```{r}
@@ -199,6 +225,9 @@ prod_soja <- c(3050, 3050, 3000, 2890, 3100, 2990, 3315) #produtividade de soja
 
 mean(prod_soja) #Usando funcões embutidas no programa
 ```
+
+---
+
 
 Qual o valor minimo de produtividade de soja?
 ```{r}
@@ -210,6 +239,7 @@ Qual o valor máximo de produtividade de soja?
 max(prod_soja)
 ```
 
+---
   
 # Fatores
 
@@ -233,7 +263,7 @@ carros <- factor(carros)
 class(carros)
 ```
 
-
+---
 
 ## Níveis (levels)
 
@@ -243,17 +273,12 @@ class(carros)
 
 - *nlevels()* - mostra o número de níveis
 
-\begin{table}[ht!]
-\centering
-\begin{tabular}{ll}
-\hline
-\textbf{Função}   & \textbf{Output}  \\ \hline
-levels(carros)         & “monza”, “chevete” \\
-nlevels(carros)        & 2                 \\ \hline
-\end{tabular}
-\end{table}
+|Função   | Output |
+|--------|:--------:|
+|levels(carros)         | “monza”, “chevete” |
+|nlevels(carros)        | 2                 |
 
-
+---
 
 ## Subconjunto de vetores (*subset*)
 
@@ -273,6 +298,9 @@ culturas[2] #Mostra o segundo valor
 culturas[c(3,2)]  #Mostra o terceiro e segundo valor
 ```
 
+---
+
+
 ```{r}
 culturas[c(1,2,3,2,1)] #Mostra valores repetidos
 ```
@@ -281,7 +309,7 @@ culturas[c(1,2,3,2,1)] #Mostra valores repetidos
 culturas[c(1:3)] #Mostra sequencia de valores
 ```
 
-
+---
 
 ## Expressões lógicas
 
@@ -290,26 +318,27 @@ culturas[c(1:3)] #Mostra sequencia de valores
  
 - Avalia cada elemento em um vetor em relação a um valor
 
-- Output: \textcolor{green}{TRUE} ou \textcolor{red}{FALSE}
+- Output: TRUE ou FALSE
   - Para cada valor do vetor
 
-## Logical expressions
+---
 
-\begin{table}[ht!]
-\centering
-\begin{tabular}{cc}
-\hline
-\multicolumn{1}{l}{Operador lógico} & \multicolumn{1}{l}{Significado} \\ \hline
-\textcolor{blue}{$>$}                       & Greater than                \\
-\textcolor{blue}{$<$}                          & Less than                   \\
-\textcolor{blue}{==}                 & Igual a                   \\
-\textcolor{blue}{!=}                 & Não igual a                \\
-\textcolor{blue}{$\&$}               & e                         \\
-\textcolor{blue}{|}                  & ou                          \\
-\textcolor{blue}{!}                  & não                         \\
-\textcolor{blue}{\%in\% }            & Contido em                \\ \hline
-\end{tabular}
-\end{table}
+## Expressões lógicas
+
+|Operador lógico | Significado    |
+|:----------------:|----------------|
+|  >               | Maior que   |   
+|  <               | Menor que      |    
+|  ==              | Igual a       |
+| !=              | Não igual a    |
+| &               | e              |
+| |              | ou            |
+|   !               | não            |
+|   %in%            | Contido em     |
+
+
+
+---
 
 
 ## Examplo: expressões lógicas
@@ -326,7 +355,7 @@ biomassa_h <- biomassa_g > 45
 biomassa_h
 ```
 
-
+---
 
 # Coerção de classe
 
@@ -339,23 +368,23 @@ biomassa_h
 
 | Tipo      	| as character 	| as numeric 	| as logical 	|
 |-----------	|--------------	|------------	|------------	|
-| \textcolor{brown}{logical}   	| "\textcolor{green}{TRUE}"       	| 1          	| \textcolor{green}{TRUE}       	|
-| \textcolor{blue}{numeric}   	| "35"         	| 35         	| NA         	|
-| \textcolor{orange}{character} 	| "Paulista"   	| NA         	| NA         	|
+| logical   	| "TRUE"       	| 1          	| TRUE      	|
+| numeric   	| "35"         	| 35         	| NA         	|
+| character 	| "Paulista"   	| NA         	| NA         	|
 
 
-
+---
 
 
 ##  Subconjunto (*subset*) de vetores
 
-- Mantém o \textcolor{green}{TRUE}, elimina o \textcolor{red}{FALSE}
+- Mantém o TRUE, elimina o FALSE
 
 - **Input**: uma expressão lógica
 
 - **Output**: um vetor com elementos que correspondem à expressão lógica
 
-- Subconjunto usando vetor \textcolor{green}{TRUE}/\textcolor{red}{FALSE} 
+- Subconjunto usando vetor TRUE/FALSE
 ```{r}
 biomassa_g[biomassa_h]
 ```
@@ -366,13 +395,15 @@ biomassa_g[biomassa_g>50]
 ```
 
 
+---
+
 # Subconjunto condicional
 
 - Combine vários condicionais
 
-- \textcolor{blue}{|} = ou (um ou outro)
+- | = ou (um ou outro)
 
-- \textcolor{blue}{$\&$} = e (os dois)
+- & = e (os dois)
 
 - Biomassa abaixo de 30 ou acima de 50:
 ```{r}
@@ -384,10 +415,11 @@ biomassa_g[biomassa_g<30 | biomassa_g>50]
 biomassa_g[biomassa_g>30 & biomassa_g<50]
 ```
 
+---
 
 ##  Subconjunto condicional: caracteres (`==`)
 
-- Operador \textcolor{blue}{==} 
+- Operador ==} 
 
 - Compara cada valor em um vetor com uma sequência de caracteres
 
@@ -410,6 +442,7 @@ Plantas que são buva ou leiteira
 plantas[plantas=="buva" | plantas=="leiteira"]
 ```
 
+---
 
 ##  Subconjunto condicional: caracteres (`%in%`)
 
@@ -419,7 +452,7 @@ plantas[plantas=="buva" | plantas=="leiteira"]
 
 - **Input**: vetor
 
-- **Output**: uma lista de \textcolor{green}{TRUE}/\textcolor{red}{FALSE} 
+- **Output**: uma lista de TRUE}/FALSE} 
 
 Quais plantas estão no vetor da mão direita?
 
@@ -433,7 +466,7 @@ plantas[plantas %in% c("amargoso", "soja", "trigo", "buva", "tiririca")]
 ```
 
 
-
+---
 
 # Dados ausentes
 
@@ -463,28 +496,29 @@ mean(altura, na.rm = TRUE)
 ```
 
 
+---
+
 ## Removendo dados ausentes
 
 
-- is.na() - Retorna \textcolor{green}{TRUE} se o valor é NA
+- is.na() - Retorna TRUE} se o valor é NA
 
-- complete.cases() - Retorna \textcolor{red}{FALSE} se o valor é NA
+- complete.cases() - Retorna FALSE} se o valor é NA
 
 - na.omit() - Retorna objeto com os valores ausentes removidos
 
 **Remove NAs 3 ways:**
 
-\scriptsize
 ```{r}
 altura[!is.na(altura)]
 ```
 
-\scriptsize
+
 ```{r}
 altura[complete.cases(altura)]
 ```
 
-\scriptsize
+
 ```{r}
 na.omit(altura)
 ```

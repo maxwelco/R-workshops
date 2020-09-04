@@ -1,5 +1,5 @@
 ---
-title: "Aula_1"
+title: "Exercícios 1"
 author: "Maxwel Coura Oliveira"
 date: "7/6/2020"
 output:

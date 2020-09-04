@@ -1,0 +1,490 @@
+---
+title: "Começando a programar"
+author: "Maxwel Coura Oliveira"
+date: "7/8/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Vamos comerçar a programar!
+
+- Operadores: aritmética, atribuição, extração, lógica
+
+- Funções: nomes, argumentos, saída
+
+- Tipos de dados: classes, vetores, quadros de dados (*data frame*)
+
+
+
+# Operadores
+
+\begin{table}[ht!]
+\centering
+\label{tab:my-table}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ccc}
+\hline
+\textbf{Operadores} & \textbf{O que faz}                 & \textbf{Simbolo}                         \\ \hline
+Aritmético      & Matemática em números                     & + - * / \textasciicircum{}              \\
+Atribuição      & Cria objetos (esquerda) com               & \textless{}-                            \\
+Extração        & Retire ou substitua parte de um objeto     & {[} {]} \$                              \\
+Lógica          & Compara valores, retorna TRUE/FALSE       & \textgreater \textless == ! \%in\% \& | \\ \hline
+\end{tabular}%
+}
+\end{table}
+
+
+# Operadores
+
+```{r}
+2 + 2 #adição
+8 - 5 #subtração
+4 * 4 #multiplicação
+6 / 2 #divisão
+```
+
+
+# Atribuição
+
+- Salva valor em objeto
+  - \textcolor{purple}{objeto} \textcolor{blue}{<-} \textcolor{brown}{valor}
+  - peso_kg \textcolor{blue}{<-} 55 
+
+
+- Combina com operação aritimetica: 
+  - peso_lb \textcolor{blue}{<-} 2.2 * peso_kg
+  
+  
+  
+# Funções e argumentos
+
+Uma sequência de instruções que executam uma tarefa. Uma função pode ter muitos comandos, mas no R existem as chamadas 'built-in', que já estão imbutidas no programa.
+
+   - Ter nomes
+   - Aceita argumentos (Input - entrada)
+   - Retorna um valor (Output - saída)
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{cc}
+\hline
+\textbf{Input - entrada}                     & \textbf{Output - saída} \\ \hline
+sqrt(9)                    & 3      \\
+round(3.14159)             & 3      \\
+round(x=3.14159), digits=2 & 3      \\ \hline
+\end{tabular}
+\end{table}
+ 
+ 
+Outros exemplos: `mean()`, `min()`, `max()`
+  
+  
+## Ajuda
+
+Caso tenham dúvidas
+
+```{r}
+?round #abre uma página com a descrição para round na interface "Files'
+```
+
+
+```{r}
+args(round) #mostra os argumentos
+```
+
+- **Google "R + "nome da função"**
+
+- Outros websites/blogs
+  - [Stack overfolow (Q&A)](https://stackoverflow.com)
+  - [R bloggers (tutorials)](https://www.r-bloggers.com)
+  - [GitHub](https://github.com)
+  
+
+# Tipos de dados
+
+- RR adivinha que tipo de dados são armazenados em um objeto
+
+- Tipos básicos:
+  - Numérico (*numeric*)
+  - nominal (*character*)
+  - Lógico (*logical*)
+     
+
+- Pode ser fácil diferenciá-los
+
+## Determinando o tipo de dado
+
+- Usamos a função `class()` ou `typeof()`
+
+Examplos:
+
+```{r}
+x <- 32
+class(x)
+```
+```{r}
+x <- "car"
+class(x)
+```
+
+```{r}
+x <- TRUE
+class(x)
+```
+
+
+
+# Estrutura de dados
+
+## Vetores
+
+- Tipo mais comum de estrutura de dados
+
+- Uma série de tipos de dados (ex. numérico)
+
+- Função concatenar: \textcolor{red}{c()}
+
+    **Input**: valores separados por vírgulas
+    
+    **Output**: um objeto vetor
+
+```{r}
+# Exemplo: uma lista com produtividade da soja
+prod_soja <- c(3000, 2890, 3100, 2990) 
+# Exemplo: uma lista com nomes de animais
+cars <- c("cavalo", "touro", "cachorro", "gato")
+```
+
+## Inspencionando vetores
+
+- Vetores tem caracteristicas:
+  - **Comprimento**: número de valores
+  - **Classe**: tipo de valores
+
+```{r}
+length(prod_soja)
+```
+```{r}
+class(prod_soja)
+```
+
+```{r}
+str(prod_soja)
+```
+  
+## Adicionando valores a um vetor
+
+- Use um vetor existente como argumento para c()
+
+- Coloque na ordem em que deseja que eles apareçam na saída vecto
+
+```{r}
+# Adicione um valor no final do vetor
+prod_soja <- c(prod_soja, 3315) 
+```
+
+```{r}
+# Adicione um valor no inicio do vetor
+prod_soja <- c(3050, prod_soja) 
+```
+
+## Usando funções `built-in` em vetores:
+
+Qual a média de produtividade de soja?
+```{r}
+prod_soja <- c(3050, 3050, 3000, 2890, 3100, 2990, 3315) #produtividade de soja
+
+(3050 + 3050 + 3000 + 2890 + 3100 + 2990 + 3315)/7 #calculando a média (muito trabalhoso desse jeito)
+
+mean(prod_soja) #Usando funcões embutidas no programa
+```
+
+Qual o valor minimo de produtividade de soja?
+```{r}
+min(prod_soja)
+```
+
+Qual o valor máximo de produtividade de soja?
+```{r}
+max(prod_soja)
+```
+
+  
+# Fatores
+
+- Representam dados categóricos
+  - Armazenado como números inteiros com rótulos de texto
+  
+  - *Data frames* convertem colunas de caracteres em fatores
+
+- *factor()* - cria um fator
+
+
+- Crie um vetor de nomes de carros
+```{r}
+carros <- c("monza", "chevete", "monza", "chevete")
+class(carros)
+```
+
+- Change vector to a factor
+```{r}
+carros <- factor(carros)
+class(carros)
+```
+
+
+
+## Níveis (levels)
+
+- Texto único de um objeto de fator
+
+- *levels()* - mostra os níveis
+
+- *nlevels()* - mostra o número de níveis
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Função}   & \textbf{Output}  \\ \hline
+levels(carros)         & “monza”, “chevete” \\
+nlevels(carros)        & 2                 \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+## Subconjunto de vetores (*subset*)
+
+- *Subset* por posição
+- *Syntax*: colchetes `[ ]`
+- Combine com `c()`
+
+```{r}
+culturas <- c("milho", "soja", "sorgo", "feijão", "café") 
+```
+
+```{r}
+culturas[2] #Mostra o segundo valor
+```
+
+```{r}
+culturas[c(3,2)]  #Mostra o terceiro e segundo valor
+```
+
+```{r}
+culturas[c(1,2,3,2,1)] #Mostra valores repetidos
+```
+
+```{r}
+culturas[c(1:3)] #Mostra sequencia de valores
+```
+
+
+
+## Expressões lógicas
+
+
+- Faz comparações
+ 
+- Avalia cada elemento em um vetor em relação a um valor
+
+- Output: \textcolor{green}{TRUE} ou \textcolor{red}{FALSE}
+  - Para cada valor do vetor
+
+## Logical expressions
+
+\begin{table}[ht!]
+\centering
+\begin{tabular}{cc}
+\hline
+\multicolumn{1}{l}{Operador lógico} & \multicolumn{1}{l}{Significado} \\ \hline
+\textcolor{blue}{$>$}                       & Greater than                \\
+\textcolor{blue}{$<$}                          & Less than                   \\
+\textcolor{blue}{==}                 & Igual a                   \\
+\textcolor{blue}{!=}                 & Não igual a                \\
+\textcolor{blue}{$\&$}               & e                         \\
+\textcolor{blue}{|}                  & ou                          \\
+\textcolor{blue}{!}                  & não                         \\
+\textcolor{blue}{\%in\% }            & Contido em                \\ \hline
+\end{tabular}
+\end{table}
+
+
+## Examplo: expressões lógicas
+
+- Crie uma variável peso
+
+```{r}
+biomassa_g <- c(22.4, 33.7, 37.1, 51.3, 59.9, 45.2)
+```
+
+- Avalia cada elemento do vetor:
+```{r}
+biomassa_h <- biomassa_g > 45
+biomassa_h
+```
+
+
+
+# Coerção de classe
+
+- O que acontece se você misturar tipos?
+
+- O R converte para um tipo que funciona para todos os elementos
+
+- Use `class()` para ver o que R escolheu
+
+
+| Tipo      	| as character 	| as numeric 	| as logical 	|
+|-----------	|--------------	|------------	|------------	|
+| \textcolor{brown}{logical}   	| "\textcolor{green}{TRUE}"       	| 1          	| \textcolor{green}{TRUE}       	|
+| \textcolor{blue}{numeric}   	| "35"         	| 35         	| NA         	|
+| \textcolor{orange}{character} 	| "Paulista"   	| NA         	| NA         	|
+
+
+
+
+
+##  Subconjunto (*subset*) de vetores
+
+- Mantém o \textcolor{green}{TRUE}, elimina o \textcolor{red}{FALSE}
+
+- **Input**: uma expressão lógica
+
+- **Output**: um vetor com elementos que correspondem à expressão lógica
+
+- Subconjunto usando vetor \textcolor{green}{TRUE}/\textcolor{red}{FALSE} 
+```{r}
+biomassa_g[biomassa_h]
+```
+
+- O mesmo que:
+```{r}
+biomassa_g[biomassa_g>50]
+```
+
+
+# Subconjunto condicional
+
+- Combine vários condicionais
+
+- \textcolor{blue}{|} = ou (um ou outro)
+
+- \textcolor{blue}{$\&$} = e (os dois)
+
+- Biomassa abaixo de 30 ou acima de 50:
+```{r}
+biomassa_g[biomassa_g<30 | biomassa_g>50]
+```
+
+- Biomassa acima de 30 e abaixo de 50:
+```{r}
+biomassa_g[biomassa_g>30 & biomassa_g<50]
+```
+
+
+##  Subconjunto condicional: caracteres (`==`)
+
+- Operador \textcolor{blue}{==} 
+
+- Compara cada valor em um vetor com uma sequência de caracteres
+
+- Combinar com `|` para múltiplos
+
+Make a character vector
+
+```{r}
+plantas <- c("amargoso", "buva", "leiteira", "guanxuma")
+```
+
+Plantas que são buva
+
+```{r}
+plantas[plantas=="buva"]
+```
+Plantas que são buva ou leiteira
+
+```{r}
+plantas[plantas=="buva" | plantas=="leiteira"]
+```
+
+
+##  Subconjunto condicional: caracteres (`%in%`)
+
+- Operador **%in%** 
+
+- Seleciona elementos do primeiro vetor que estão no segundo vetor
+
+- **Input**: vetor
+
+- **Output**: uma lista de \textcolor{green}{TRUE}/\textcolor{red}{FALSE} 
+
+Quais plantas estão no vetor da mão direita?
+
+```{r}
+plantas %in% c("amargoso", "soja", "trigo", "buva", "tiririca")
+```
+
+Retornando os nomes das plantas"
+```{r}
+plantas[plantas %in% c("amargoso", "soja", "trigo", "buva", "tiririca")]
+```
+
+
+
+
+# Dados ausentes
+
+- NA (not available) - harder to overlook missing data
+
+- Argumento: na.rm = TRUE
+
+
+```{r}
+na.rm = TRUE #Ignores missing data
+```
+
+```{r}
+altura <- c(2.5, 4.4, 4.1, NA, 6.5, 7.5) #um vetor
+```
+
+- Mean of a missing value?
+
+```{r}
+mean(altura)
+```
+
+- Remove the missing data
+
+```{r}
+mean(altura, na.rm = TRUE)
+```
+
+
+## Removendo dados ausentes
+
+
+- is.na() - Retorna \textcolor{green}{TRUE} se o valor é NA
+
+- complete.cases() - Retorna \textcolor{red}{FALSE} se o valor é NA
+
+- na.omit() - Retorna objeto com os valores ausentes removidos
+
+**Remove NAs 3 ways:**
+
+\scriptsize
+```{r}
+altura[!is.na(altura)]
+```
+
+\scriptsize
+```{r}
+altura[complete.cases(altura)]
+```
+
+\scriptsize
+```{r}
+na.omit(altura)
+```

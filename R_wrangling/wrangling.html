@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução a Programação em R para as Ciências Agrárias</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxwel Coura Oliveira" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introdução a Programação em R para as Ciências Agrárias
+## Manipulação de dados
+### Maxwel Coura Oliveira
+### Universidade do Oeste Paulista
+### 2016/12/12 (updated: 2020-09-04)
+
+---
+
+
+
+## Outline
+
+- 7 verbos do *dplyr* para manipulação de dados
+  - select, filter, group_by, summarize, mutate, count, arrange
+  
+- Combinando verbos usando pipes **%&gt;%**
+  
+- 2 verbos tidyr para remodelar seus dados (pivot_longer, pivot_wider)
+
+---
+  
+##  Cheat sheet
+  
+- [Data Wrangling with dplyr and tidyr](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+
+&lt;img src="https://audhalbritter.com/wp-content/uploads/2016/07/Bildschirmfoto-2016-07-25-um-23.13.54.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+##  O que é tidyverse?
+
+- Pacotes para manipulação de dados
+
+- Construído para manipulação de dados
+
+- Torna a manipulação de dados mais fácil do que na base R
+
+- Combina verbos usando pipes
+ 
+
+ 
+&lt;img src="images/tidyverse.png" width="70%" style="display: block; margin: auto;" /&gt;
+ 
+
+---
+
+
+##  Instalando os pacotes (packages)
+
+
+- install.packages()
+
+- Input: nome do pacote
+
+- Baixe os pacotes do CRAN (Comprehensive R Archive Network)
+
+- Instale apenas uma vez
+
+
+
+```r
+#install.packages("tidyverse")
+```
+
+
+&lt;img src="https://media.giphy.com/media/128MHrlrHNwwU0/giphy.gif" width="50%" style="display: block; margin: auto;" /&gt;
+---
+
+## Carregando pacotes
+
+
+- library()
+
+- Input: nome do pacote
+
+- Dá acesso ao R para funções no pacote
+
+- Carregue os pacotes sempre que reiniciar o R
+
+
+
+
+```r
+library(tidyverse)
+```
+
+```
+## ── Attaching packages ──────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
+```
+
+```
+## ── Conflicts ─────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+```
+
+
+
+
+---
+
+
+## Dados: orange circunference
+
+.pull-left[
+
+- Armazenado em arquivo .csv
+
+- *Linhas*: observação individual de uma laranja
+
+- *Colunas*: variáveis que descrevem o experimento
+  - expunit, tree, age, circunference
+  
+]
+
+.pull-right[
+
+&lt;img src="images/orange.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+
+##  Importando os dados em tidyverse
+
+
+
+
+- *read_csv()* – importa o conteúdo do arquivo CSV
+
+
+- *Input*: caminho (a file path)
+
+
+- *Output* um “tibble”
+
+
+
+
+
+
+
+```r
+read_csv("orange.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   expunit = col_double(),
+##   tree = col_double(),
+##   age = col_double(),
+##   circumference = col_double()
+## )
+```
+
+```
+## # A tibble: 35 x 4
+##    expunit  tree   age circumference
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+##  1       1     1   118            30
+##  2       2     1   484            58
+##  3       3     1   664            87
+##  4       4     1  1004           115
+##  5       5     1  1231           120
+##  6       6     1  1372           142
+##  7       7     1  1582           145
+##  8       8     2   118            33
+##  9       9     2   484            69
+## 10      10     2   664           111
+## # … with 25 more rows
+```
+
+
+
+---
+
+##  Por quê não read.csv()?
+
+
+- read_csv() é mais rápido
+
+
+- Cria tibbles
+
+
+- Mais reproduzível
+ 
+
+
+| Data frame           | Tibble                        |
+|----------------------|-------------------------------|
+| Strings to factors   | Keeps character               |
+| Has row names        | No row names                  |
+| Changes column names | Keeps column nas as they are  |
+
+
+---
+
+
+## verbos dplyr
+
+
+
+- O primeiro argumento é sempre uma tabela
+   - Tibble ou data frame
+
+- Output é uma nova tabela
+
+- Não altera os dados deo input
+   - Deve salvar o output usando &lt;-
+  
+
+```python
+novo_df &lt;- verb(velho_df, ... )
+
+ou
+
+velho_df &lt;- verb(velho_df, ... )
+```
+
+
+---
+
+##  select()
+
+.pull-left[
+
+- Seleciona colunas de um data frame
+
+- Input: dados e colunas a serem mantidos
+
+- Output: dados com apenas as colunas especificadas
+
+
+
+```r
+select(orange, age)
+```
+
+```
+## # A tibble: 35 x 1
+##      age
+##    &lt;dbl&gt;
+##  1   118
+##  2   484
+##  3   664
+##  4  1004
+##  5  1231
+##  6  1372
+##  7  1582
+##  8   118
+##  9   484
+## 10   664
+## # … with 25 more rows
+```
+
+]
+
+.pull-right[
+
+**O mesmo que**
+
+
+
+
+```r
+tibble(orange$age)
+```
+
+```
+## # A tibble: 35 x 1
+##    `orange$age`
+##           &lt;dbl&gt;
+##  1          118
+##  2          484
+##  3          664
+##  4         1004
+##  5         1231
+##  6         1372
+##  7         1582
+##  8          118
+##  9          484
+## 10          664
+## # … with 25 more rows
+```
+
+]
+
+---
+
+
+## filter()
+
+.pull-left[
+
+- Escolhe as linhas com base nos valores de uma variável
+
+- **Input**: dados e uma expressão lógica (retorna (retorna true/false)
+    - &lt;, &gt;, &gt;=, &lt;=, ==, !=
+
+- **Output**: dados com linhas que correspondem à expressão
+
+
+```r
+filter(orange, tree == "1")
+```
+
+```
+## # A tibble: 7 x 4
+##   expunit  tree   age circumference
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+## 1       1     1   118            30
+## 2       2     1   484            58
+## 3       3     1   664            87
+## 4       4     1  1004           115
+## 5       5     1  1231           120
+## 6       6     1  1372           142
+## 7       7     1  1582           145
+```
+
+]
+
+.pull-left[
+
+**O mesmo que**
+
+
+
+```r
+orange[orange$tree == "1",]
+```
+
+```
+## # A tibble: 7 x 4
+##   expunit  tree   age circumference
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+## 1       1     1   118            30
+## 2       2     1   484            58
+## 3       3     1   664            87
+## 4       4     1  1004           115
+## 5       5     1  1231           120
+## 6       6     1  1372           142
+## 7       7     1  1582           145
+```
+
+]
+
+---
+
+
+## Operador Pipe %&gt;%
+
+
+
+
+- Combina vários verbos
+
+- Sintaxe: %&gt;% no final da linha
+
+- Output da primeira linha se torna o input da proxima linha, etc.
+
+- Diga em voz alta como "então"
+
+
+
+
+```r
+orange %&gt;% 
+  filter(circumference &gt;200) %&gt;% 
+     select(tree, circumference)
+```
+
+```
+## # A tibble: 4 x 2
+##    tree circumference
+##   &lt;dbl&gt;         &lt;dbl&gt;
+## 1     2           203
+## 2     2           203
+## 3     4           209
+## 4     4           214
+```
+
+
+
+---
+
+##  Exercício #1: praticando pipes (%&gt;%)
+
+- Usando pipes, subset the orange data to include
+
+  - individuos de **age** menor que 600
+  
+  - retenha apenas as colunas **tree** e **age**
+
+---
+
+
+##  mutate()
+
+
+
+
+- Cria uma nova coluna
+
+- Input: dados e a definição da nova coluna
+  
+  - col_name = &lt;valor&gt;
+
+- Output: dados com a nova coluna
+
+
+
+```r
+mutate(orange,
+       circ_cm = circumference / 100)
+```
+
+```
+## # A tibble: 35 x 5
+##    expunit  tree   age circumference circ_cm
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1     1   118            30   0.3  
+##  2       2     1   484            58   0.580
+##  3       3     1   664            87   0.87 
+##  4       4     1  1004           115   1.15 
+##  5       5     1  1231           120   1.2  
+##  6       6     1  1372           142   1.42 
+##  7       7     1  1582           145   1.45 
+##  8       8     2   118            33   0.33 
+##  9       9     2   484            69   0.69 
+## 10      10     2   664           111   1.11 
+## # … with 25 more rows
+```
+
+]
+
+---
+
+##  mutate()
+
+**Same as**
+
+
+
+```r
+orange %&gt;% 
+  mutate(circ_cm = circumference / 100)
+```
+
+```
+## # A tibble: 35 x 5
+##    expunit  tree   age circumference circ_cm
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1     1   118            30   0.3  
+##  2       2     1   484            58   0.580
+##  3       3     1   664            87   0.87 
+##  4       4     1  1004           115   1.15 
+##  5       5     1  1231           120   1.2  
+##  6       6     1  1372           142   1.42 
+##  7       7     1  1582           145   1.45 
+##  8       8     2   118            33   0.33 
+##  9       9     2   484            69   0.69 
+## 10      10     2   664           111   1.11 
+## # … with 25 more rows
+```
+
+
+
+---
+
+##  Exercício 2: desafio data frame
+
+- Crie um novo data frame a partir dos dados do survey que atenda aos seguintes critérios:
+ 
+   1. contém apenas a coluna da árvore e uma nova coluna chamada **circ_half **
+  
+   2. **circ_half** contém valores que são metade dos valores da circunferência
+ 
+   3. Inclua apenas idade maior que 500
+
+
+- **Dica**: pense em como os comandos devem ser ordenados para produzir este quadro de dados!
+
+ 
+---
+
+## Creating a summary table
+
+.pull-left[
+
+
+
+
+- summarize}()
+ 
+- Input}: data and a summary statistic
+
+  - Eg: mean}()
+  
+  - na.rm} = TRUE
+
+- Output}: a table with the calculated summary statistic
+
+]
+
+.pull-right[
+
+
+
+
+
+
+```r
+orange %&gt;% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+```
+## # A tibble: 1 x 1
+##   mean_circ
+##       &lt;dbl&gt;
+## 1      116.
+```
+
+
+]
+
+---
+
+## Creating a grouped summary table
+
+.pull-left[
+
+- **group_by()**
+ 
+- Input}: data and a variable
+
+- Output}: a table with the calculated summary statistic for each unique value in the variable
+
+]
+
+.pull-right[
+
+
+
+```r
+orange %&gt;% 
+  group_by(tree) %&gt;% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 5 x 2
+##    tree mean_circ
+##   &lt;dbl&gt;     &lt;dbl&gt;
+## 1     1      99.6
+## 2     2     135. 
+## 3     3      94  
+## 4     4     139. 
+## 5     5     111.
+```
+
+
+]
+
+---
+
+
+## Removing missing values
+
+.pull-left[
+
+- **is.na()**
+  - missing = TRUE}
+  - not missing = FALSE}
+
+
+- Input}: a column
+
+- Output}: logical vector
+
+- Use it as input to filter()
+
+]
+
+.pull-right[
+
+
+
+```r
+orange %&gt;% 
+  filter(!is.na(circumference)) %&gt;%
+  group_by(tree) %&gt;% 
+  summarize(mean_circ = mean(circumference, 
+                             na.rm=TRUE))
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 5 x 2
+##    tree mean_circ
+##   &lt;dbl&gt;     &lt;dbl&gt;
+## 1     1      99.6
+## 2     2     135. 
+## 3     3      94  
+## 4     4     139. 
+## 5     5     111.
+```
+
+
+]
+
+---
+
+
+## count()
+
+.pull-left[
+
+- Count the number of observations
+
+- Input}:
+  - categorical variable
+  
+- **sort** = TRUE: sorts the results
+
+- Output}: a table with a row for each categorical variable and a column called n with counts
+
+]
+
+.pull-right[
+
+\tiny
+
+```r
+orange %&gt;% 
+  count(tree)
+```
+
+```
+## # A tibble: 5 x 2
+##    tree     n
+##   &lt;dbl&gt; &lt;int&gt;
+## 1     1     7
+## 2     2     7
+## 3     3     7
+## 4     4     7
+## 5     5     7
+```
+
+Same as 
+
+\tiny
+
+```r
+orange %&gt;% 
+  group_by(tree) %&gt;% 
+  summarize(count=n())
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 5 x 2
+##    tree count
+##   &lt;dbl&gt; &lt;int&gt;
+## 1     1     7
+## 2     2     7
+## 3     3     7
+## 4     4     7
+## 5     5     7
+```
+
+]
+
+
+## arrange()
+
+
+
+.pull-left[
+
+- Order results in ascending order
+
+- Input}:
+  - A variable
+  - Use desc}() to put them in descending order
+
+- Output}: A table ordered by the values of the input column
+
+]
+
+.pull-right[
+
+
+
+```r
+orange %&gt;% 
+  group_by(tree) %&gt;% 
+  arrange(desc(circumference))
+```
+
+```
+## # A tibble: 35 x 4
+## # Groups:   tree [5]
+##    expunit  tree   age circumference
+##      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+##  1      28     4  1582           214
+##  2      27     4  1372           209
+##  3      13     2  1372           203
+##  4      14     2  1582           203
+##  5      26     4  1231           179
+##  6      35     5  1582           177
+##  7      34     5  1372           174
+##  8      12     2  1231           172
+##  9      25     4  1004           167
+## 10      11     2  1004           156
+## # … with 25 more rows
+```
+
+]
+
+
+
+##  Exercise 3
+
+
+1 - Use **group_by()** and summarize}() to find the mean}(), min}(), and max}() circumference} (mm) for each tree}.
+
+
+
+
+
+2 - **Bonus**: How many days passed from the fist to the last circumference measurement?
+
+
+
+---
+
+
+## Reshaping data with tidyr
+
+.pull-left[
+
+- The shape of your data affects what you can do with it
+
+- **Example**: compare the mean circumference} of each tree adding a new column (High or Low) circumference} size
+
+]
+
+.pull-right[
+
+&lt;img src="images/orange.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+## Exercise 
+
+.pull-left[
+
+- Create a table with columns for tree} and circunference} and **mean** circunference. Add a logical parameter for circunference}, *&gt;* 100 (High) or *&lt;* 100 (Low)
+
+- Save to a new object called **orange_nd**
+
+]
+
+
+.pull-right[
+
+
+
+```r
+orange_nd &lt;- orange %&gt;% 
+  select(tree, circumference) %&gt;%
+  mutate(size = factor(1*(circumference &gt; 100), 
+               labels = c("Low", "High"))) %&gt;% 
+  group_by(size, tree) %&gt;% 
+  summarise(mean_cir = mean(circumference))
+```
+
+```
+## `summarise()` regrouping output by 'size' (override with `.groups` argument)
+```
+
+```r
+orange_nd
+```
+
+```
+## # A tibble: 10 x 3
+## # Groups:   size [2]
+##    size   tree mean_cir
+##    &lt;fct&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Low       1     58.3
+##  2 Low       2     51  
+##  3 Low       3     52  
+##  4 Low       4     47  
+##  5 Low       5     53.3
+##  6 High      1    130. 
+##  7 High      2    169  
+##  8 High      3    126. 
+##  9 High      4    176. 
+## 10 High      5    154.
+```
+
+]
+
+
+## Tidy Data
+
+
+.pull-left[
+
+1) Each variable has its own column
+
+2) Each observation has its own row
+
+3) Each value has its own cell
+
+4) Each type of observational unit forms a table
+ 
+
+]
+
+
+.pull-right[
+
+&lt;img src="images/tidying.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+
+---
+
+## Reshaping data with tidyr
+
+
+.pull-left[
+
+- Spreading}: makes a wider table
+  - Unique values in a specified column (key) become variable names
+
+- Gathering}: makes a longer table
+  - Variable names become values in a new column (key)
+
+
+]
+
+.pull-right[
+
+&lt;img src="images/tidyr.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+
+## spread()
+
+
+.pull-left[
+
+- use it when an observation is scattered across multiple rows
+
+- Input}:
+  - data} (a tibble)
+  - key} column (values become new column names)
+  - value} column (to fill new column variables)
+
+- Output}: a table with columns for each value of sex
+
+
+]
+
+.pull-right[
+
+
+```r
+orange_spread &lt;- orange_nd %&gt;% 
+  spread(key = tree,
+         value = mean_cir)
+
+orange_spread
+```
+
+```
+## # A tibble: 2 x 6
+## # Groups:   size [2]
+##   size    `1`   `2`   `3`   `4`   `5`
+##   &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Low    58.3    51   52    47   53.3
+## 2 High  130.    169  126.  176. 154.
+```
+
+]
+
+---
+
+
+## Spread
+
+
+&lt;img src="images/table.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+## gather()
+
+.pull-left[
+
+- Use when column names are not names of variables, but values of a variable
+
+- Input:
+  - data} (a tibble)
+  - key} column (created from col names)
+  - values column (fill the key variable)
+  - A range of columns to gather
+
+- Output}: a long tibble
+
+
+]
+
+
+.pull-right[
+
+
+
+```r
+orange_gather &lt;- orange_spread %&gt;% 
+  gather(key = tree,
+         value = mean_cir, "1":"2":"3":"4":"5")
+
+orange_gather
+```
+
+```
+## # A tibble: 10 x 3
+## # Groups:   size [2]
+##    size  tree  mean_cir
+##    &lt;fct&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1 Low   1         58.3
+##  2 High  1        130. 
+##  3 Low   2         51  
+##  4 High  2        169  
+##  5 Low   3         52  
+##  6 High  3        126. 
+##  7 Low   4         47  
+##  8 High  4        176. 
+##  9 Low   5         53.3
+## 10 High  5        154.
+```
+
+
+]
+
+
+## Gather
+
+
+&lt;img src="images/table2.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Exercise 4
+
+
+- Spread the **orange_nd** data frame with size} as columns, tree} as rows, and the **mean_cir** per plot as the values. 
+
+
+
+---
+
+## write_csv
+
+.pull-left[
+
+- Writes a data table to a file
+
+- Input}: a tibble, a file path
+
+-  Output}: a file at the specified file path
+
+
+]
+
+.pull-right[
+
+
+\scriptsize
+
+```r
+write_csv(orange_nd,
+          path = "orange2.csv")
+```
+
+]
+
+
+---
+
+## Need help
+
+- **Email**: max.oliveira@wisc.edu
+
+- Github repository: [Link](https://github.com/maxwelco/UNOESTE)
+
+
+- Data Wrangling cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+
+- Thanks to Data Camp for sharing slides
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
