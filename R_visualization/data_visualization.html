@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Programação em R para as Ciências Agrárias</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxwel Coura Oliveira" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Programação em R para as Ciências Agrárias
+## Data Visualization
+### Maxwel Coura Oliveira
+### Universidade do Oeste Paulista
+### 2016/12/12 (updated: 2020-09-10)
+
+---
+
+
+
+
+
+## Outline
+
+- Por quê ggplot2?
+
+- Elementos básicos (dados, estética, geoms)
+
+- Modificações (transparência, cor, agrupamento, temas)
+
+- Exportando plotagens (ggsave)
+
+
+
+---
+
+
+##  Por quê ggplot2?
+
+
+
+
+- Reprodutibilidade
+
+- Parte do tidyverse
+
+- Bonito por padrão
+
+- Customizável
+ 
+
+ 
+&lt;img src="images/tidyverse.png" width="60%" style="display: block; margin: auto;" /&gt;
+ 
+
+---
+
+
+## Data set: CO&lt;sub&gt;2&lt;/sub&gt;
+
+.pull-left[
+
+A absorção de CO&lt;sub&gt;2&lt;/sub&gt; de seis plantas de Quebec/CAN e seis plantas de Mississippi/EUA foi medida em vários níveis de concentração de CO&lt;sub&gt;2&lt;/sub&gt; no ambiente. Metade das plantas de cada tipo foram resfriadas durante a noite antes do experimento ser conduzido.
+
+]
+
+.pull-right[
+
+- Armazenado em um arquivo .csv
+
+- *Linhas*: observações de cada planta
+
+- *Colunas*: Variáveis que descrevem o experimento
+  - Plant, Type, Treatment, conc, and uptake
+
+]
+
+
+&lt;img src="images/co2.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## ggplot2 faz plotagens modulares
+
+
+&lt;img src="images/ggplot.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## “Gramática” dos gráficos ggplot2
+
+- **dados:** os dados que você deseja "plotar"
+
+- **Mapeamentos estéticos:** mapeamento de variáveis para os eixos
+
+- **geoms:** como você deseja que os dados sejam desenhados
+   - Ex: pontos, linhas, barras
+ 
+- **ggplot():** cria um objeto ggplot
+
+- **aes():** desenha eixos com base em argumentos
+
+- **geom_XXX():** desenha pontos/linhas etc
+
+- **+:** adiciona componentes ao gráfico
+   - Estrutura modular
+
+ 
+---
+
+
+## Exemplo
+
+
+
+- Orange dataset from previous examples (data wrangling)
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-6-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Plotting data
+
+
+
+- ggplot():
+   - tabela de dados para "plotar"
+   - função mapeamento = aes()
+   - variável do eixo x
+   - variável do eixo y
+
+- geom() - como desenhar os dados
+ 
+
+
+
+```r
+ggplot(data=CO2, 
+       aes(x=conc, y=uptake)) +
+  geom_point()
+```
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-7-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+ 
+
+---
+
+
+## Modificando ggplots
+
+
+- Cor e transparência
+
+- Outros geoms
+
+- Temas
+
+
+
+
+&lt;img src="images/multiple.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+## Specifying data
+
+
+.pull-left[
+
+- ggplot (): Cria um objeto de plotagem
+
+- **Input**: tabela de dados
+
+- **Output**: plotagem em branco
+]
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2)
+```
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-9-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+
+
+## Mapeamentos estéticos
+
+.pull-left[
+- Desenhe os eixos
+
+- **Input**:
+   - argumento de mapeamento
+   - função aes ()
+   - x = variável do eixo x
+   - y = variável do eixo y
+
+- **Output**: plot with axes, no data
+]
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake))
+```
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+
+## Geometrias
+
+.pull-left[
+- *geom_point()*: desenha pontos dos dados
+
+- **Input**: função *geom_*
+  - requer o operador **+**
+  - Espaço em branco é importante
+
+- **Output**: gráfico de dispersão
+
+]
+
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake)) +
+  geom_point()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Modificando ggplots
+
+.pull-left[
+- **Cor e transparência**
+
+- Outros geoms
+
+- Temas
+]
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake, 
+                color=Plant)) +
+  geom_point()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Adicionar transparência
+
+
+.pull-left[
+- Adicionar argumento a geom_point()
+
+- Reduz a transparência dos pontos
+
+- **Input**: alpha} = 0.1 
+  - opacidade 1/10 
+  - Alcance: 0-1
+]
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake,
+                color=Plant)) +
+  geom_point(alpha=0.1) 
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+## Adicionar cor
+
+.pull-left[
+- Altere as cores dos pontos para azul
+
+- **Input**: argumento de cor (blue)
+  - Tabela de referência de cores: [Link](http://sape.inf.usi.ch/quick-refe rence/ggplot2/colour)
+  - **Output**: pontos azuis
+]
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake)) +
+  geom_point(alpha=0.5, 
+             color="blue") 
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Adicionar cor por tipo (local)
+
+.pull-left[
+- Pontos de cor por variável
+
+- Input: cor = &lt;variável de fator&gt;
+
+- Deve estar dentro de aes()
+  - Qualquer coisa que faça referência ao conjunto de dados
+  - Como variáveis x e y
+
+- **Output**: um gráfico colorido
+
+]
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=conc, 
+                y=uptake,
+                color=Plant)) +
+  geom_point(alpha=0.5)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+## Exercício 1
+
+- Use o exemplo anterior como ponto de partida. 
+
+- Adicione cor aos pontos de dados de acordo com a planta da qual a amostra foi retirada (planta)
+
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-16-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+## Modificando ggplots
+
+
+
+- Color and transparency
+
+- **Outros geoms**
+  - Dados categóricos
+  - Série temporal
+
+- **Temas**
+
+
+
+&lt;img src="images/multiple.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+
+
+## Plotando categorias
+
+.pull-left[
+-  geom_point não funciona para tudo
+  - Overplotted
+  - Como podemos espalhar os dados?
+
+- Use um geom diferente:
+  - geom_jitter()
+]
+
+
+
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=Type, 
+                y=uptake)) +
+  geom_jitter()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+
+---
+
+
+## geom_jitter
+
+
+.pull-left[
+- geom_jitter() - espalha os pontos
+
+- Melhor, mas ainda overplotted
+
+- Que tipo de plot se parece?
+
+]
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=Type, 
+                y=uptake)) +
+  geom_jitter(alpha=0.2)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Box plots
+
+.pull-left[
+-Categórico vs. numérico
+
+- geom_boxplot() - desenha um boxplot
+  - Mediana - linha do meio
+  - Quartis - borda do plot
+  - Outliers - pontos fora do plot
+
+- Mostra melhor a disseminação dos dados
+]
+
+
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=Type, 
+                y=uptake)) +
+  geom_boxplot()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+
+
+## Camadas de geoms
+
+
+.pull-left[
+- Use o operador **+** para sobrepor geoms
+]
+
+
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=Type, 
+                y=uptake)) +
+  geom_boxplot() +
+  geom_jitter(alpha=0.5,
+              color="tomato")
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## A ordem importa
+
+.pull-left[
+- Ordem inversa dos geoms
+
+]
+
+
+
+.pull-right[
+
+```r
+ggplot(data = CO2,
+  mapping = aes(x=Type, 
+                y=uptake)) +
+  geom_jitter(alpha=0.5,
+              color="tomato") +
+  geom_boxplot() 
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+## Exercise 2: plot violino
+
+
+- Plote os mesmos dados do exemplo anterior, mas como um gráfico de violino
+
+  - Hint: veja *geom_violin()*.
+ 
+- Que informações sobre os dados esse gráfico violino oferece?
+
+
+---
+
+
+
+## Gráfico temporal
+
+
+.pull-left[
+- Visualize tendências ao longo do tempo
+
+- Normalmente uma estatística resumida
+
+- Provavelmente necessário remodelar os dados
+
+- Considere quais variáveis você precisa para construir o gráfico
+]
+
+
+
+
+
+.pull-right[
+![](data_visualization_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Dados de série temporal
+
+
+.pull-left[
+- Carregue os telefones do conjunto de dados
+
+- Conjunto de dados: Número de telefones em cada continente de 1951 a 1961
+]
+
+.pull-right[
+
+```r
+phones &lt;- read_csv("phones.csv")
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   year = col_double(),
+##   location = col_character(),
+##   number = col_double()
+## )
+```
+
+```r
+phones
+```
+
+```
+## # A tibble: 49 x 3
+##     year location number
+##    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+##  1  1951 N.Amer    45939
+##  2  1956 N.Amer    60423
+##  3  1957 N.Amer    64721
+##  4  1958 N.Amer    68484
+##  5  1959 N.Amer    71799
+##  6  1960 N.Amer    76036
+##  7  1961 N.Amer    79831
+##  8  1951 Europe    21574
+##  9  1956 Europe    29990
+## 10  1957 Europe    32510
+## # … with 39 more rows
+```
+]
+
+
+
+---
+
+
+
+## Dados de série temporal
+
+
+.pull-left[
+- Use geom_line()
+
+- Input ao ggplot()
+  - dados = phones
+  - x = year
+  - y = number (# observações)
+]
+
+
+
+
+.pull-right[
+
+```r
+ggplot(data = phones,
+  mapping = aes(x=year, 
+                y=number)) +
+  geom_line()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+
+## agrupar por localion
+
+
+.pull-left[
+- Crie uma linha para cada local
+
+- **Input** 
+  - argumento aes(): group
+
+- Mas que linha é qual localização?
+]
+
+
+.pull-right[
+
+```r
+ggplot(data = phones,
+  mapping = aes(x=year, 
+                y=number, 
+  group=location)) +
+  geom_line()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+
+
+## Create a legend
+
+
+
+.pull-left[
+- Adicione cor para gerar uma legenda automaticamente
+
+
+- argumento aes(): color
+
+
+]
+
+
+
+.pull-right[
+
+```r
+ggplot(data = phones,
+  mapping = aes(x=year, 
+                y=number, 
+  color=location)) +
+  geom_line()
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+
+
+## Salvar ggplots em uma variável
+
+
+.pull-left[
+- Salva ggplot como uma lista
+
+- Para renderizar um gráfico salvo, envie o nome do gráfico para o console
+
+- Pode adicionar o gráfico ou usá-lo para exportá-lo para um arquivo
+]
+
+
+
+.pull-right[
+
+```r
+lineplot &lt;- ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+  color=location)) +
+  geom_line()
+lineplot
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+## Criação de gráficos de qualidade de publicação
+
+
+
+.pull-left[
+- gráfico de linha
+
+![](data_visualization_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+- gráfico de linha + theme_XX()
+
+
+![](data_visualization_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+]
+
+
+
+
+
+---
+
+
+
+
+## Aplicando temas feitos previamente
+
+.pull-left[
+
+- Feitos previamente
+  - Ex: theme_bw()
+  - Lista de temas em help (?theme)
+  
+- Aplicar tema usando o operador **+**
+
+- Bônus: pacote *ggthemes*
+]
+
+
+.pull-right[
+- gráfico de linha + theme_XX()
+
+
+
+```r
+linebw &lt;- lineplot + theme_bw() 
+linebw
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+
+## Personalizar rótulos de eixo
+
+
+.pull-left[
+- Padrão: nomes de variáveis como do eixo x e y
+  
+- labs() - especificar nomes
+   - título: título do gráfico
+   - nome do eixo x: x
+   - nome do eixo y: y
+
+
+- Fornece um texto mais descritivo
+]
+
+
+
+.pull-right[
+
+```r
+new_fig &lt;- linebw + 
+  labs(y="Number of phones", x="Year", 
+       title="Telephones in the world")
+new_fig
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+
+
+
+## Personalize o tamanho da fonte
+
+
+.pull-left[
+- *tema ()* - ajustes finos para o tema
+   - Usado com elementos de tema
+   - Ex: text size
+
+- *element_text()*
+   - size - tamanho do texto
+   - family - fonte
+  
+-? margin para mais elementos do tema ggplot
+
+
+
+```r
+new_fig &lt;- new_fig + 
+theme(text=element_text(size=16))
+
+new_fig
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+
+## Crie seu próprio tema
+
+
+- Salve seu tema em um objeto de lista
+
+- Pode ser aplicado a qualquer gráfico
+
+- Certifique-se de incluir apenas elementos de tema, não geoms etc.
+
+
+
+```r
+theme_nd &lt;- theme_bw() +
+theme(text = element_text(size=16)) 
+# add font="Arial"
+```
+]
+
+---
+
+## Aplique seu tema
+
+
+
+```r
+box &lt;- ggplot(data = phones,
+  mapping = aes(x=year, y=number, 
+    color=location)) +
+  geom_boxplot() + theme_nd 
+
+box
+```
+
+&lt;img src="data_visualization_files/figure-html/unnamed-chunk-36-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Organizando os gráficos
+
+.pull-left[
+- Sem função em ggplot2
+
+- Use the cowplot library
+
+- plot_grid()
+  - Plots to arrange
+  - Ncols - number of columns
+  - Labels 
+
+- See ?plot_grid
+
+
+
+```r
+library(cowplot)
+```
+
+```
+## 
+## ********************************************************
+```
+
+```
+## Note: As of version 1.0.0, cowplot does not change the
+```
+
+```
+##   default ggplot2 theme anymore. To recover the previous
+```
+
+```
+##   behavior, execute:
+##   theme_set(theme_cowplot())
+```
+
+```
+## ********************************************************
+```
+]
+
+
+
+
+
+.pull-right[
+
+```r
+plot_grid(new_fig, box,
+          ncol=2, 
+          labels =c("A", "B"))
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+## Arranging plots
+
+
+
+.pull-left[
+
+- Plot window &gt; Export
+
+- ggsave(): salva o gráfico em um arquivo
+  - filename - nome do novo arquivo
+  - plot - plot to be saved
+  - device - gráfico a ser salva
+  - dpi - qualidade da imagem
+  - width - width of output
+  - height - height of output 
+]
+
+.pull-right[
+```
+ggsave(filename = "name.png", 
+plot = box, dpi = 600,
+units = "in", width = 15, 
+height = 10)
+```
+]
+
+---
+
+## Facetamento
+
+.pull-left[
+
+- Divide um gráfico em vários com base em um fator
+
+- facet_XXX() - especifica o layout dos painéis
+
+- **~** - formula 
+
+- x **~** y
+]
+
+
+.pull-right[
+&lt;img src="images/facet.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## facet_wrap
+
+.pull-left[
+- Faceta em uma variável
+
+- *facet_wrap()* - envolve os painéis horizontalmente, se ajusta à tela
+
+- Argumento: **~** y
+]
+
+
+
+.pull-right[
+
+
+```r
+ggplot(phones, aes(x=year, y=number,
+  group=location)) +
+  geom_line() +
+  facet_wrap(~location)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+##  Cor por location
+
+
+.pull-left[
+- Adiciona dimensionalidade ao gráfico
+]
+
+
+
+.pull-right[
+
+```r
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_wrap(~location)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+]
+
+
+
+---
+
+##  facet_grid
+
+.pull-left[
+
+- Especifique o seu layout
+
+]
+
+
+
+.pull-right[
+
+```r
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_grid(location ~ .)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+]
+
+---
+
+##  facet_grid
+
+.pull-left[
+- Mudança de orientação
+
+]
+
+
+.pull-right[
+
+```r
+ggplot(phones, aes(x=year, y=number,
+  color=location)) +
+  geom_line() +
+  facet_grid(.~location)
+```
+
+![](data_visualization_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## Precisa de ajuda?
+
+- **Email**: max.oliveira@wisc.edu
+
+- Repositório Github: [Link](https://github.com/maxwelco)
+
+- Data Visualization cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

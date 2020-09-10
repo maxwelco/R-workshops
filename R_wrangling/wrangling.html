@@ -15,9 +15,11 @@ class: center, middle, inverse, title-slide
 ## Manipulação de dados
 ### Maxwel Coura Oliveira
 ### Universidade do Oeste Paulista
-### 2016/12/12 (updated: 2020-09-04)
+### 2016/12/12 (updated: 2020-09-10)
 
 ---
+
+
 
 
 
@@ -100,7 +102,7 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ──────────── tidyverse 1.3.0 ──
+## ── Attaching packages ──────── tidyverse 1.3.0 ──
 ```
 
 ```
@@ -111,9 +113,10 @@ library(tidyverse)
 ```
 
 ```
-## ── Conflicts ─────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
+## ── Conflicts ─────────── tidyverse_conflicts() ──
+## x dplyr::filter()     masks stats::filter()
+## x dplyr::group_rows() masks kableExtra::group_rows()
+## x dplyr::lag()        masks stats::lag()
 ```
 
 
@@ -507,22 +510,22 @@ orange %&gt;%
  
 ---
 
-## Creating a summary table
+## Criando de uma tabela de resumo
 
 .pull-left[
 
 
 
 
-- summarize}()
+- summarize()
  
-- Input}: data and a summary statistic
+- **Input:** dados e uma estatística resumida
 
-  - Eg: mean}()
+  - Eg: mean()
   
-  - na.rm} = TRUE
+  - na.rm = TRUE
 
-- Output}: a table with the calculated summary statistic
+- **Output:** uma tabela com a estatística de resumo calculada
 
 ]
 
@@ -551,15 +554,15 @@ orange %&gt;%
 
 ---
 
-## Creating a grouped summary table
+## Criação de uma tabela de resumo agrupada
 
 .pull-left[
 
 - **group_by()**
  
-- Input}: data and a variable
+- **Input:** dados e uma variável
 
-- Output}: a table with the calculated summary statistic for each unique value in the variable
+- **Output:** uma tabela com a estatística de resumo calculada para cada valor único na variável
 
 ]
 
@@ -595,20 +598,20 @@ orange %&gt;%
 ---
 
 
-## Removing missing values
+## Removendo valores ausentes
 
 .pull-left[
 
 - **is.na()**
-  - missing = TRUE}
-  - not missing = FALSE}
+  - missing = TRUE
+  - not missing = FALSE
 
 
-- Input}: a column
+- Input: uma coluna
 
-- Output}: logical vector
+- Output: vetor lógico
 
-- Use it as input to filter()
+- Use-o como entrada para filter()
 
 ]
 
@@ -649,20 +652,20 @@ orange %&gt;%
 
 .pull-left[
 
-- Count the number of observations
+- Conte o número de observações
 
-- Input}:
-  - categorical variable
+- Input:
+  - variável categórica
   
-- **sort** = TRUE: sorts the results
+- **sort** = TRUE: classifica os resultados
 
-- Output}: a table with a row for each categorical variable and a column called n with counts
+- Output: uma tabela com uma linha para cada variável categórica e uma coluna chamada n com contagens
 
 ]
 
 .pull-right[
 
-\tiny
+
 
 ```r
 orange %&gt;% 
@@ -682,7 +685,7 @@ orange %&gt;%
 
 Same as 
 
-\tiny
+
 
 ```r
 orange %&gt;% 
@@ -714,13 +717,13 @@ orange %&gt;%
 
 .pull-left[
 
-- Order results in ascending order
+- Resultados da ordem em ordem crescente
 
-- Input}:
-  - A variable
-  - Use desc}() to put them in descending order
+- Input:
+  - Uma variável
+  - Use desc() colocá-los em ordem decrescente
 
-- Output}: A table ordered by the values of the input column
+- Output: Uma tabela ordenada pelos valores da coluna de entrada
 
 ]
 
@@ -756,29 +759,29 @@ orange %&gt;%
 
 
 
-##  Exercise 3
+##  Exercício 3
 
 
-1 - Use **group_by()** and summarize}() to find the mean}(), min}(), and max}() circumference} (mm) for each tree}.
+1 - Use **group_by()** e summarize}() para calcular a mean(), min(), and max() circumference (mm) de cada árvore (tree).
 
 
 
 
 
-2 - **Bonus**: How many days passed from the fist to the last circumference measurement?
+2 - **Bonus**: Quantos dias se passaram desde a primeira até a última medição da circunferência?
 
 
 
 ---
 
 
-## Reshaping data with tidyr
+## Remodelando dados com tidyr
 
 .pull-left[
 
-- The shape of your data affects what you can do with it
+- A forma dos seus dados afeta o que você pode fazer com eles
 
-- **Example**: compare the mean circumference} of each tree adding a new column (High or Low) circumference} size
+- **Exemplo**: compare a média circumference de cada tree adicionando uma nova coluna (High or Low) circumference size (tamanho da circunferência)
 
 ]
 
@@ -791,13 +794,13 @@ orange %&gt;%
 
 ---
 
-## Exercise 
+## Exercício 4
 
 .pull-left[
 
-- Create a table with columns for tree} and circunference} and **mean** circunference. Add a logical parameter for circunference}, *&gt;* 100 (High) or *&lt;* 100 (Low)
+- Crie uma tabela com colunas para tree e circunference e **mean** circunference. Adicione um parâmetro lógico para circunference, *&gt;* 100 (High) ou *&lt;* 100 (Low)
 
-- Save to a new object called **orange_nd**
+- Salve em um novo objeto chamado **orange_nd**
 
 ]
 
@@ -848,13 +851,13 @@ orange_nd
 
 .pull-left[
 
-1) Each variable has its own column
+1) Cada variável tem sua própria coluna
 
-2) Each observation has its own row
+2) Cada observação tem sua própria linha
 
-3) Each value has its own cell
+3) Cada valor tem sua própria célula
 
-4) Each type of observational unit forms a table
+4) Cada tipo de unidade observacional forma uma tabela
  
 
 ]
@@ -869,16 +872,16 @@ orange_nd
 
 ---
 
-## Reshaping data with tidyr
+## Remodelando dados com tidyr
 
 
 .pull-left[
 
-- Spreading}: makes a wider table
-  - Unique values in a specified column (key) become variable names
+- Spreading: faz uma tabela mais ampla
+  - Valores únicos em uma coluna especificada (key) tornam-se nomes de variáveis
 
-- Gathering}: makes a longer table
-  - Variable names become values in a new column (key)
+- Gathering: faz uma tabela mais longa
+  - Nomes de variáveis tornam-se valores em uma nova coluna (key)
 
 
 ]
@@ -892,19 +895,19 @@ orange_nd
 ---
 
 
-## spread()
+## pivot_wider()
 
 
 .pull-left[
 
-- use it when an observation is scattered across multiple rows
+- use-o quando uma observação estiver espalhada por várias linhas
 
-- Input}:
-  - data} (a tibble)
-  - key} column (values become new column names)
-  - value} column (to fill new column variables)
+- **Input:**
+  - tabela (tibble / data frame)
+  - coluna-chave (os valores tornam-se novos nomes de coluna)
+  - coluna de valor (para preencher novas variáveis de coluna)
 
-- Output}: a table with columns for each value of sex
+- **Output:** uma tabela com colunas para cada valor de sexo
 
 
 ]
@@ -914,8 +917,8 @@ orange_nd
 
 ```r
 orange_spread &lt;- orange_nd %&gt;% 
-  spread(key = tree,
-         value = mean_cir)
+  pivot_wider(names_from = tree,
+         values_from = mean_cir)
 
 orange_spread
 ```
@@ -934,25 +937,26 @@ orange_spread
 ---
 
 
-## Spread
+## Espalhar
 
 
 &lt;img src="images/table.png" width="100%" style="display: block; margin: auto;" /&gt;
 
+---
 
-## gather()
+## pivot_longer()
 
 .pull-left[
 
-- Use when column names are not names of variables, but values of a variable
+- Use quando os nomes das colunas não forem nomes de variáveis, mas valores de uma variável
 
-- Input:
-  - data} (a tibble)
-  - key} column (created from col names)
+- **Input:**
+  - data (a tibble)
+  - key column (created from col names)
   - values column (fill the key variable)
   - A range of columns to gather
 
-- Output}: a long tibble
+- **Output:** a long tibble
 
 
 ]
@@ -964,8 +968,8 @@ orange_spread
 
 ```r
 orange_gather &lt;- orange_spread %&gt;% 
-  gather(key = tree,
-         value = mean_cir, "1":"2":"3":"4":"5")
+  pivot_longer(names_to = "tree",
+         cols = "1":"2":"3":"4":"5")
 
 orange_gather
 ```
@@ -973,23 +977,25 @@ orange_gather
 ```
 ## # A tibble: 10 x 3
 ## # Groups:   size [2]
-##    size  tree  mean_cir
-##    &lt;fct&gt; &lt;chr&gt;    &lt;dbl&gt;
-##  1 Low   1         58.3
-##  2 High  1        130. 
-##  3 Low   2         51  
-##  4 High  2        169  
-##  5 Low   3         52  
-##  6 High  3        126. 
-##  7 Low   4         47  
-##  8 High  4        176. 
-##  9 Low   5         53.3
-## 10 High  5        154.
+##    size  tree  value
+##    &lt;fct&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 Low   1      58.3
+##  2 Low   2      51  
+##  3 Low   3      52  
+##  4 Low   4      47  
+##  5 Low   5      53.3
+##  6 High  1     130. 
+##  7 High  2     169  
+##  8 High  3     126. 
+##  9 High  4     176. 
+## 10 High  5     154.
 ```
 
 
 ]
 
+
+---
 
 ## Gather
 
@@ -999,12 +1005,124 @@ orange_gather
 
 ---
 
-## Exercise 4
+## Exercício 5
 
 
-- Spread the **orange_nd** data frame with size} as columns, tree} as rows, and the **mean_cir** per plot as the values. 
+- Espalhe o **orange_nd** data frame com o tamanho das colunas, tree como linhas e the **mean_cir** per plot as the values. 
+
+.pull-left[
+
+Fazer essa tabela:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; size &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; tree &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean_cir &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Low &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.33333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Low &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Low &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Low &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Low &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53.33333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; High &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 130.50000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; High &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 169.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; High &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 125.50000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; High &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 176.20000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; High &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 154.50000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
 
 
+.pull-right[
+
+
+
+Ficar assim:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; tree &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Low &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; High &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.33333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 130.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51.00000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 169.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52.00000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 125.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47.00000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 176.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53.33333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 154.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
 
 ---
 
@@ -1012,11 +1130,11 @@ orange_gather
 
 .pull-left[
 
-- Writes a data table to a file
+- Grava uma tabela de dados em um arquivo
 
-- Input}: a tibble, a file path
+- **Input:** uma tibble, um caminho de arquivo
 
--  Output}: a file at the specified file path
+-  **Output:** um arquivo no caminho de arquivo especificado
 
 
 ]
@@ -1024,7 +1142,7 @@ orange_gather
 .pull-right[
 
 
-\scriptsize
+
 
 ```r
 write_csv(orange_nd,
@@ -1036,17 +1154,14 @@ write_csv(orange_nd,
 
 ---
 
-## Need help
+## Preciso de ajuda?
 
-- **Email**: max.oliveira@wisc.edu
+- **Email**: maxweloliveira@unoeste.br
 
-- Github repository: [Link](https://github.com/maxwelco/UNOESTE)
+- Repositório Github: [Link](https://github.com/maxwelco)
 
 
 - Data Wrangling cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
-
-
-- Thanks to Data Camp for sharing slides
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
