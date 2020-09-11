@@ -186,7 +186,7 @@ knitr::include_graphics("figures/ggplot.png")
 ## Example 
 
 ```{r include=FALSE}
-orange <- orange
+orange <-read_csv("orange.csv")
 ```
 
 - Orange dataset from previous examples (data wrangling)

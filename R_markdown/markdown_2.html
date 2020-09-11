@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Programação em R para as Ciências Agrárias</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxwel Coura Oliveira" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Programação em R para as Ciências Agrárias
+## Markdown
+### Maxwel Coura Oliveira
+### Universidade do Oeste Paulista
+### 2016/12/12 (updated: 2020-09-11)
+
+---
+
+
+
+
+
+## Outline
+
+- O que é programação alfabetizada?
+
+- Por que é útil?
+
+- Como usar R Markdown para criar relatórios reproduzíveis
+   - Formatação de texto
+   - Pedaços de código (chunks)
+   - Formatos de saída (outputs)
+ 
+
+---
+
+## Livro 
+
+- [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+&lt;img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+ 
+---
+
+- O que é programação alfabetizada?
+
+&lt;center&gt;
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+Texto legível por humanos
+
+&lt;br&gt;
+&lt;br&gt;
+
+ +
+
+&lt;br&gt;
+&lt;br&gt;
+
+Código legível por máquina
+
+&lt;br&gt;
+&lt;br&gt;
+
+ =
+
+&lt;br&gt;
+&lt;br&gt;
+
+Documento reproduzível
+
+&lt;/center&gt;
+
+
+---
+
+
+## Programas como obras de literatura
+
+- Desenvolvido por Donald Knuth, Stanford University
+
+- Tradicional: dizer a um computador o que fazer
+
+- Novo: dizer a um humano o que você quer que o computador faça
+
+- Melhora a documentação e os próprios programas
+ 
+ 
+&lt;img src="https://cdn.thenewstack.io/media/2017/12/4d1c7903-knuth.jpg" width="50%" style="display: block; margin: auto;" /&gt;
+ 
+---
+
+
+
+## Programação alfabetizada em pesquisa
+
+.pull-left[
+
+- Personalize relatórios para um público
+
+- Repetível e garante reprodutibilidade
+
+- Funciona bem com controle de versão (Git)
+
+- Funciona bem com as linguaguens usadas na pesquisa:
+
+]
+
+.pull-right[
+
+&lt;img src="https://jupyter.org/assets/main-logo.svg" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+
+## R Markdown
+
+
+- Tece texto narrativo e código
+  - R
+  - Python 
+  - Stata
+  - SAS
+  
+- Produz documentos em muitos formatos
+
+- Reproduzível
+
+
+
+&lt;img src="http://cdn.differencebetween.net/wp-content/uploads/2019/02/Difference-Between-Python-and-R-Machine-Learning--768x595.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Configuração
+
+.pull-left[
+
+- Tools &gt; install packages OU install.packages("markdown")
+
+- Instale o pacote tinytex para criar PDFs
+
+- Abra o projeto **R**
+]
+
+.pull-right[
+&lt;img src="images/knitr.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Abrir / Criar um documento markdown
+
+
+
+.pull-left[
+
+&lt;img src="images/newfile.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/newdoc.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+## Seções do R Markdown
+
+
+&lt;img src="images/script.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## Notebook interface
+
+
+
+- Pressione o triângulo em um `code chunk` para executar o código e mostrar a saída (`output`)
+
+
+
+&lt;img src="images/run.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+##  Knit: do texto para o documento
+
+
+.pull-left[
+
+render(input = “name.Rmd”, output = “html_document”)
+
+**OU**
+
+
+&lt;img src="images/html.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+.pull-right[
+&lt;img src="images/output.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+##  Como funciona?
+
+
+- knitr package converte o **R Markdown** documento para markdown
+
+- Pandoc converte o documento Markdown para o final
+
+&lt;img src="images/pandoc.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Exercício 1: renderizar o documento
+
+- Knit o documento 
+
+- - Exclua tudo, exceto o cabeçalho (`header`)
+
+- knit de novo
+
+- O que mudou? Você teve algum problema?
+ 
+---
+
+##  Texto legível por humanos
+
+
+.pull-left[
+
+- Outline first, code 
+
+
+
+- Use markdown rich formatting syntax to
+
+- Cheat sheet: [Link](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+]
+
+.pull-right[
+&lt;img src="images/cheat.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+##  Exercise 2: escreva um esboço
+
+
+- Veja o documento da folha de dicas (`cheat sheet`) 
+
+
+
+- Escreva o texto abaixo em **Rmd** com todos os números em itálico e todos os nomes do Brasil em negrito. Escreva também o texto com Brasil como título e Nome, Área e Cidades como subtítulo. Fonte: [Wikipedia] (https://pt.wikipedia.org/wiki/Brasil)
+
+
+
+Brasil
+
+Nome
+
+"Brasil, oficialmente República Federativa do Brasil, é o maior país da América do Sul e da região da América Latina, sendo o quinto maior do mundo em área territorial (equivalente a 47,3% do território sul-americano) e sexto em população (com mais de 210 milhões de habitantes)."
+
+Área
+
+Com 8,5 milhões de quilômetros quadrados (3,2 milhões de milhas quadradas) e mais de 208 milhões de habitantes, o Brasil é o quinto maior país do mundo em área e o quinto mais populoso.
+
+
+---
+
+
+
+
+
+##  Adding code chunks
+
+
+
+
+- Delimitadores do Chunk 
+ 
+    - beginning: ```{r name
+    
+    &lt;code&gt;
+    
+    - end: ```
+
+- Shortkey: Ctrl+Alt+i 
+
+- Barra de ferramentas do editor
+
+
+&lt;img src="images/insert.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+##  Setup code block
+
+```
+#load the libraries we need 
+library(tidyverse) 
+library(knitr)
+```
+
+
+
+&lt;img src="images/data.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+
+##  Code chunk options
+
+
+- include = FALSE
+  + Hide code and results from document 
+  + results can still be used later
+  
+fig.pos='h'
+- echo = FALSE
+  + hides code, keeps result
+  
+fig.pos='h'
+- message = FALSE 
+  + hides messages 
+  
+fig.pos='h'
+- warning = FALSE 
+  + hides warnings
+  
+fig.pos='h'
+- fig.cap = " " 
+  + adds figure captions
+ 
+---
+
+##  Exercise 3: code chunk
+
+
+.pull-left[
+
+- insert a code block called graph
+fig.pos='h'}
+- Add the ggplot code
+fig.pos='h'}
+- Render
+fig.pos='h'}
+- Use options to hide the code
+]
+
+.pull-right[
+
+```r
+ggplot(data = data, aes(x = treat,
+y = control, fill = treat)) +
+  geom_bar(stat="summary") +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+```
+## No summary function supplied, defaulting to `mean_se()`
+```
+
+&lt;img src="markdown_2_files/figure-html/unnamed-chunk-19-1.png" width="80%" /&gt;
+]
+
+
+---
+
+
+##  Setting options for all code chunks
+
+- Set default options for all code chunks
+fig.pos='h'}
+- knitr::opts_chunk$set() function
+fig.pos='h'}
+- Put it in your first codeblock
+fig.pos='h'}
+- Must be after you load the rmarkdown package
+
+---
+
+
+## Tables
+
+
+- Tables look like console output by default
+
+- kable() function makes it pretty
+ 
+
+
+
+```r
+nd &lt;- data %&gt;% 
+  group_by(treat) %&gt;% 
+  summarize(control = mean(control))
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+
+```r
+kable(nd)
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; treat &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; glyphosate &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mesotrione + fluthiacet-methyl &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83.33333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mesotrione/atrazine + diflufenzopyr/dicamba &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78.33333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mesotrione/atrazine + glufosinate &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 86.66667 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Mesotrione/atrazine + metribuzin &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.66667 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+##  Inline code
+
+
+- Syntax `r`
+
+- Include in test for responsive text
+
+- Allows you to write one report and run it over changing datasets
+
+- Example: mean
+
+
+&lt;img src="images/inline.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+The mean control of herbicides is 74.6
+
+
+---
+
+
+
+## Change output formats
+
+.pull-left[
+- select output from knit menu
+fig.pos='h'}
+- Specify output in header
+fig.pos='h'}
+- with render
+]
+
+.pull-right[
+&lt;img src="images/koptions.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;img src="images/yalm.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;img src="images/render.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+
+## Parameters
+
+
+
+.pull-left[
+
+- Creates custom report without having to change the code chunks
+fig.pos='h'}
+- Add to the header
+fig.pos='h'}
+- Creates a read only list of parameters
+]
+
+.pull-right[
+&lt;img src="images/params.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+
+## Subset with parameters
+
+
+.pull-left[
+
+
+- Change the header to add a treat parameter
+
+fig.pos='h'}
+
+- Subset by treat using a filter statement in the setup code chunk
+
+fig.pos='h'}
+
+- Render
+]
+
+.pull-right[
+&lt;img src="images/params2.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+## Subset with parameters
+
+
+.pull-left[
+
+
+- params argument
+
+
+
+- takes a list
+
+
+
+- overrides default in the Rmd
+]
+
+.pull-right[
+&lt;img src="images/render2.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+##  Parameter user interface
+
+.pull-left[
+
+
+- params = “ask”
+
+- Opens up a web browser
+
+- Select options
+
+- Hit save
+
+- Doc gets rendered
+]
+
+.pull-right[
+
+
+
+
+
+
+]
+
+
+---
+
+
+##  Types of parameter input
+
+- Parameterized reports: [Link](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html)
+
+&lt;img src="images/params3.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## More functions
+
+- Customized **YAML** metadata
+
+- Presentations
+
+- Manuscripts
+
+---
+
+##  Summary
+
+
+- Literate programming makes reproducible research more machine readable
+
+- R markdown documents facilitate literate programming in RStudio
+
+- R markdown has 3 sections
+  - Header: determines output and adds parameters
+  - Markdown Text: can include inline code
+  - Code chunks: can be customized to mute code or output
+
+- Parameters help you customize reports
+ 
+
+---
+
+
+## Need help?
+
+- Email: max.oliveira@wisc.edu
+
+- R markdown cheatsheet: [Link](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-che atsheet.pdf)
+
+- R markdown tutorial: [Link](https://rmarkdown.rstudio.com/lesson-1.html)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
