@@ -341,21 +341,19 @@ knitr::include_graphics("images/insert.png")
 
 ---
 
-##  Setup code block
+##  Configuração od bloco de código (`chunk`)
 
-```
+```{r message=FALSE, echo=TRUE}
 #load the libraries we need 
 library(tidyverse) 
 library(knitr)
 ```
 
-```{r include=FALSE}
+```{r message=FALSE, echo=TRUE}
 data <- read_csv("control.csv")
 ```
 
-```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("images/data.png")
-``` 
+
 
 
 ---
@@ -365,43 +363,43 @@ knitr::include_graphics("images/data.png")
 
 
 - include = FALSE
-  + Hide code and results from document 
-  + results can still be used later
+  + Oculta código e resultados do documento 
+  + Resultados ainda podem ser usados mais tarde
   
-fig.pos='h'
+
 - echo = FALSE
-  + hides code, keeps result
+  + esconde o código, mantém o resultado
   
-fig.pos='h'
+
 - message = FALSE 
   + hides messages 
   
-fig.pos='h'
+
 - warning = FALSE 
-  + hides warnings
+  + esconde avisos
   
-fig.pos='h'
+
 - fig.cap = " " 
-  + adds figure captions
+  + adiciona títulos de figuras
  
 ---
 
-##  Exercise 3: code chunk
+##  Exercício 3: code chunk
 
 
 .pull-left[
 
-- insert a code block called graph
-fig.pos='h'}
-- Add the ggplot code
-fig.pos='h'}
-- Render
-fig.pos='h'}
-- Use options to hide the code
+- insira un bloco de código (`chunk`) com o nome de gráfico
+
+- Adicione o código ggplot
+
+- Renderizar
+
+- Use opções para ocultar o código
 ]
 
 .pull-right[
-```{r, out.width= '80%', warning=FALSE}
+```{r, out.width= '80%', message=FALSE}
 ggplot(data = data, aes(x = treat,
 y = control, fill = treat)) +
   geom_bar(stat="summary") +
@@ -414,26 +412,34 @@ y = control, fill = treat)) +
 ---
 
 
-##  Setting options for all code chunks
+## Opções de configuração para todos os blocos de código (`chunk`)
 
-- Set default options for all code chunks
-fig.pos='h'}
-- knitr::opts_chunk$set() function
-fig.pos='h'}
-- Put it in your first codeblock
-fig.pos='h'}
-- Must be after you load the rmarkdown package
+- Defina as opções padrão para todos os blocos de código
+
+- função knitr::opts_chunk$set() 
+
+- Coloque-o no seu primeiro bloco de código
+
+- Deve ser depois de carregar o pacote rmarkdown
+
+```{r}
+knitr::opts_chunk$set(message = FALSE) 
+```
+
 
 ---
 
 
-## Tables
+## Tabelas
 
 
-- Tables look like console output by default
+- As tabelas parecem com a saída (`output`) do console por padrão
 
-- kable() function makes it pretty
+- função kable() torna a tabela bonita
  
+```{r echo=TRUE, message=FALSE}
+library(kableExtra)
+```
 
 
 ```{r}
@@ -449,16 +455,21 @@ kable(nd)
 
 ---
 
-##  Inline code
+##  Código inline 
 
 
-- Syntax `r`
+- Sintaxe `r`
 
-- Include in test for responsive text
+- Incluir no teste de texto responsivo
 
-- Allows you to write one report and run it over changing datasets
+- Permite que você escreva um relatório e execute-o em conjuntos de dados variáveis
 
-- Example: mean
+- Exemplo: média
+
+
+<br>
+
+A média do controle de herbicidas é `r mean(data$control)`
 
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
@@ -466,37 +477,44 @@ knitr::include_graphics("images/inline.png")
 ``` 
 
 
-The mean control of herbicides is `r mean(data$control)`
 
 
 ---
 
 
 
-## Change output formats
+## Mude os formatos de saída (`output`)
 
 .pull-left[
-- select output from knit menu
-fig.pos='h'}
-- Specify output in header
-fig.pos='h'}
-- with render
-]
 
-.pull-right[
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+- selecione a saída (`output`) do menu knit
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
 knitr::include_graphics("images/koptions.png")
 ``` 
 
 
 
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+
+]
+
+.pull-right[
+
+- Especifique a saída no cabeçalho
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
 knitr::include_graphics("images/yalm.png")
 ``` 
 
 
 
-```{r, echo=FALSE, fig.cap="", out.width = '60%', fig.align="center", fig.retina = 2, fig.pos='h'}
+- com render
+
+
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
 knitr::include_graphics("images/render.png")
 ``` 
 ]
@@ -526,19 +544,19 @@ knitr::include_graphics("images/params.png")
 ---
 
 
-## Subset with parameters
+## Subconjunto com parâmetros
 
 
 .pull-left[
 
 
-- Change the header to add a treat parameter
+- Altere o cabeçalho para adicionar um parâmetro de tratamento (treat)
 
-fig.pos='h'}
 
-- Subset by treat using a filter statement in the setup code chunk
 
-fig.pos='h'}
+- Subconjunto por tratamento (treat) usando uma instrução de filtro no fragmento do código de configuração
+
+
 
 - Render
 ]
@@ -552,21 +570,21 @@ knitr::include_graphics("images/params2.png")
 
 ---
 
-## Subset with parameters
+## Subconjunto com parâmetros
 
 
 .pull-left[
 
 
-- params argument
+- Argumento params 
 
 
 
-- takes a list
+- Pega uma lista (list)
 
 
 
-- overrides default in the Rmd
+- substitui o padrão no Rmd
 ]
 
 .pull-right[
@@ -584,13 +602,13 @@ knitr::include_graphics("images/render2.png")
 
 - params = “ask”
 
-- Opens up a web browser
+- Abre um navegador da web
 
-- Select options
+- Selecione as opções
 
-- Hit save
+- Clique em Salvar
 
-- Doc gets rendered
+- Doc é renderizado
 ]
 
 .pull-right[
@@ -606,9 +624,9 @@ knitr::include_graphics("images/render2.png")
 ---
 
 
-##  Types of parameter input
+##  Tipos de parâmetros de entrada
 
-- Parameterized reports: [Link](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html)
+- Relatórios parametrizados: [Link](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html)
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
 knitr::include_graphics("images/params3.png")
@@ -616,37 +634,37 @@ knitr::include_graphics("images/params3.png")
 
 ---
 
-## More functions
+## Mais funções
 
-- Customized **YAML** metadata
+- Metadados ** YAML ** personalizados
 
-- Presentations
+- Apresentações
 
-- Manuscripts
+- Manuscritos
 
 ---
 
 ##  Summary
 
 
-- Literate programming makes reproducible research more machine readable
+- A programação alfabetizada torna a pesquisa reproduzível mais legível por uma máquina
 
-- R markdown documents facilitate literate programming in RStudio
+- Documentos de R markdown facilitam a programação literária no RStudio
 
-- R markdown has 3 sections
-  - Header: determines output and adds parameters
-  - Markdown Text: can include inline code
-  - Code chunks: can be customized to mute code or output
+- O R markdown tem 3 seções
+   - **Cabeçalho:** determina a saída e adiciona parâmetros
+   - **Texto Markdown:** pode incluir código embutido
+   - **Pedaços de código:** podem ser personalizados para silenciar o código ou saída
 
-- Parameters help you customize reports
+- Os parâmetros ajudam a personalizar relatórios
  
 
 ---
 
 
-## Need help?
+## Precisa de ajuda?
 
-- Email: max.oliveira@wisc.edu
+- Email: maxweloliveira@unoeste.br
 
 - R markdown cheatsheet: [Link](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-che atsheet.pdf)
 

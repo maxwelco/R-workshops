@@ -1,6 +1,6 @@
 ---
 title: "Introdução a Programação em R para as Ciências Agrárias"
-subtitle: "Aula 1"
+subtitle: "Introdução"
 author: "Maxwel Coura Oliveira"
 institute: "Universidade do Oeste Paulista"
 date: "2016/12/12 (updated: `r Sys.Date()`)"
@@ -115,7 +115,7 @@ Há uma variedade de linguagens de computador que podemos usar para programaçã
 - Mantenha o .R ou .Rmd atualizado clicando na opção salvar ("disquete") na barra de ferramentas do Rstudio.
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("figures/Script.png")
+knitr::include_graphics("images/Script.png")
 ```
 
 
@@ -126,7 +126,7 @@ knitr::include_graphics("figures/Script.png")
 A interface do Rstudio é dividida em quatro partes.
 
 ```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("figures/Fullscript.png")
+knitr::include_graphics("images/Fullscript.png")
 ```
 
 ---
@@ -142,7 +142,7 @@ knitr::include_graphics("figures/Fullscript.png")
   - Comandos executados aparecem no *Console*
 
 ```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("figures/ScriptConsole.png")
+knitr::include_graphics("images/ScriptConsole.png")
 ```
 
 ---
@@ -163,7 +163,7 @@ knitr::include_graphics("figures/ScriptConsole.png")
 
 
 ```{r, echo=FALSE, fig.cap="", out.width = '80%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("figures/github.jpg")
+knitr::include_graphics("images/github.jpg")
 ```
 
 ---
@@ -172,3 +172,10 @@ knitr::include_graphics("figures/github.jpg")
 
 
 Livro [Happy Git and GitHub for the useR](https://happygitwithr.com)
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '70%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("https://happygitwithr.com/img/watch-me-diff-watch-me-rebase-smaller.png")
+```
+
