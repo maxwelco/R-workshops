@@ -4,21 +4,24 @@ author: "Maxwel Coura Oliveira"
 date: ""
 output:
   html_document:
-    theme: journal
-    highlight: espresso
+    theme: flatly
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    number_sections: TRUE
 ---
 
 
-As etapas descritas aqui são amplamente baseadas no resumo de [Alison Presmanes Hill](https://alison.rbind.io) e no Happy Git with R de Jenny Bryan (www.happygitwithr.com). O livro é ótimo, fácil de seguir e muito mais completo (e provavelmente tecnicamente correto) do que este documento.
+As Etapas descritas aqui são amplamente baseadas no resumo de [Alison Presmanes Hill](https://alison.rbind.io) e no Happy Git with R de Jenny Bryan (www.happygitwithr.com). O livro é ótimo, fácil de seguir e muito mais completo (e provavelmente tecnicamente correto) do que este documento.
 
 
-## PASSO 0. CRIE UMA CONTA GITHUB
+# Crie uma conta no Github
 
-- Vá para github.com para registrar uma conta (você deveria ter feito isso na Atribuição 1).
+- Vá para github.com para registrar uma conta (você deveria ter feito isso na Tarefa 1).
 - Escolha seu nome de usuário e e-mail com cuidado! > Para dicas sobre nome de usuário, etc., consulte o Capítulo 4 do livro de Jenny: http://happygitwithr.com/github-acct.html
 
 
-## ETAPA 1. CONECTAR RSTUDIO com GITHUB
+# Conecte o RStudio com o Github
 **Nota:** isso pressupõe que você tenha uma versão recente do R/RStudio instalada e em execução com êxito. Caso contrário, consulte as recomendações no livro de Jenny, Capítulo 5: http://happygitwithr.com/install-r-rstudio.html
 
 Abra o RStudio e vá para o Terminal >>
@@ -32,11 +35,11 @@ knitr::include_graphics("images/terminal.png")
 
 
 
-## ETAPA 2. VERIFIQUE PARA VER SE VOCÊ JÁ TEM O GIT INSTALADO
+# Verifique se você tem o Git instalado
 
-Onde o cursor ativo está, digite `which git` (nota: USUÁRIOS DE PC digite `where git`) e pressione Enter. Se o git estiver instalado, ele retornará um caminho para algo como usr/bin/git (pode não corresponder exatamente, mas se surgir um caminho que termine com git, então você o tem, eu acho). Se você tiver o git instalado, continue na **Etapa 4** para configurar o GitHub.
+Onde o cursor ativo está, digite `which git` (nota: USUÁRIOS DE PC digite `where git`) e pressione Enter. Se o git estiver instalado, ele retornará um caminho para algo como usr/bin/git (pode não corresponder exatamente, mas se surgir um caminho que termine com git, então você o tem, eu acho). Se você tiver o git instalado, continue na **Etapa 5** para configurar o GitHub.
 
-Você pode ser solicitado a instalar o git automaticamente se não o tiver - faça isso! Se for perguntado! Escolha sim (yes - y). Se você não for solicitado a instalar automaticamente, vá para a **Etapa 3** para instalar manualmente.
+Você pode ser solicitado a instalar o git automaticamente se não o tiver - faça isso! Se for perguntado! Escolha sim (yes - y). Se você não for solicitado a instalar automaticamente, vá para a **Etapa 4** para instalar manualmente.
 
 
 ```{r, echo=FALSE, fig.cap="", out.width = '70%', fig.align="center", fig.retina = 2, fig.pos='h'}
@@ -55,18 +58,18 @@ knitr::include_graphics("images/terminal_3.png")
 
 
 
-## ETAPA 3. INSTALAR O GIT MANUALMENTE 
+# Instale o Git manualmente
 
-> NOTA: Você só deve ter que instalar manualmente se git **NÃO** foi encontrado na **Etapa 2** e não foi solicitado que você instalasse automaticamente.
+> NOTA: Você só deve ter que instalar manualmente se git **NÃO** foi encontrado na **Etapa 3** e não foi solicitado que você instalasse automaticamente.
 
-Para a instalação do git, consulte o Capítulo 6 em Happy Git with R: http://happygitwithr.com/install-git.html. Depois de instalá-lo (reinicie o R/RStudio!), Certifique-se de que pode ver o caminho e a versão do git no terminal (execute as **Etapas 1 e 2** acima, garantindo que agora você pode ver o caminho e a versão do git uma vez está instalado). Depois de instalá-lo com sucesso, vá para a **Etapa 4**.
-
-
-
-## ETAPA 4. CONFIGURAR GIT (2 opções) para fazer RStudio e GitHub falarem
+Para a instalação do git, consulte o Capítulo 6 em Happy Git with R: http://happygitwithr.com/install-git.html. Depois de instalá-lo (reinicie o R/RStudio!), Certifique-se de que pode ver o caminho e a versão do git no terminal (execute as **Etapas 2 e 3** acima, garantindo que agora você pode ver o caminho e a versão do git uma vez está instalado). Depois de instalá-lo com sucesso, vá para a **Etapa 5**.
 
 
-# OPÇÃO 1: Usando `usethis::use_git_config()` em Rstudio
+
+# Configure o Git para fazer RStudio e GitHub se conectarem
+
+
+## OPÇÃO 1: Usando `usethis::use_git_config()` em Rstudio
 
 **Nota:** Escreva esse código (não copie e cole - as aspas diferentes aqui irão causar um problema se copiadas e coladas diretamente no RStudio).
 
@@ -90,7 +93,7 @@ use_git_config(user.name = "seu_nome_usuario", user.email = "seu_email_associado
 ```
 
 
-# OPÇÃO 2: Comandos no Terminal
+## OPÇÃO 2: Comandos no Terminal
 
 No Terminal (ou Shell), digite o seguinte (pressionando 'Enter' após cada linha) - novamente, certificando-se de que o e-mail que você digitou é o e-mail associado à sua conta GitHub.
 
@@ -126,7 +129,7 @@ Se receber o erro acima, você desejará reinstalar as ferramentas de linha de c
 
 
 
-## ETAPA 5. ASSEGURE-SE DE QUE GIT / GITHUB / RSTUDIO ESTÁ SE COMUNICANDO
+# Assegure-se de que o Git/Github/Rstudio estão se comunicando
 
 Para o propósito de começar o curso de Programação em R para Ciências Agrárias, o que você precisa fazer é:
  
@@ -219,24 +222,24 @@ knitr::include_graphics("images/github_4.png")
  
  
  
-### RESOLUÇÃO DE PROBLEMAS (relevante apenas se você teve os problemas acima)
+# Resolvendo problemas (relevante apenas se você teve os problemas acima)
  
-#### Recursos
+## Recursos
  
-##### Happy Git com R Capítulos 14 e 15
+### Happy Git com R Capítulos 14 e 15
 
 http://happygitwithr.com/rstudio-see-git.html
 http://happygitwithr.com/trou troubleshooting.html
  
-##### Solução de problemas de configuração do git do Carpentries
+### Solução de problemas de configuração do git do Carpentries
 
 https://github.com/carpentries/workshop-template/wiki/Configuration-Problems-and-Solutions
  
 Suporte RStudio: https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN
  
-##### Notas adicionais:
+# Notas adicionais:
  
-###### Usuários do Windows
+## Usuários do Windows
 
 No R-Studio, Tools -> Global Options
 Clique em Git / SVN nos ícones à esquerda
@@ -244,12 +247,12 @@ Clique em procurar executável Git e aponte para:
 c:\arquivos de programas\git\bin\git.exe
 Reinicie o R-Studio e tente configurar novamente
  
-###### Para usuários de mac
+## Para usuários de mac
 
 Tente mudar o caminho do git de <font color='blue'>/usr/bin/git</font> para <font color='blue'>/user/local/git/bin/git</font>
 
 
-###### Usando o correto Shell
+## Usando o correto Shell
 
 **Tools > Global Options > Git/SVN** e, nessa janela, certifique-se de que ambas as opções “Habilitar interface de controle de versão para projetos RStudio” e “Usar git Bash como shell para projetos Git” estão selecionadas. Você pode querer reiniciar o RStudio neste ponto. Então, ao abrir o Terminal/Shell (em Ferramentas no RStudio), você deve estar no lugar certo (git bash shell) e pode tentar a configuração novamente.
 
