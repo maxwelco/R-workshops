@@ -127,14 +127,12 @@ knitr::include_graphics("images/terminal_5.png")
 Se receber o erro acima, você desejará reinstalar as ferramentas de linha de comando do X-Code, acompanhando o código do terminal aqui: https://stackoverflow.com/questions/52522565/git-is-not-working-after-macos -mojave-update-xcrun-error-invalid-active-devel
 
 
-
-
 # Assegure-se de que o Git/Github/Rstudio estão se comunicando
 
 Para o propósito de começar o curso de Programação em R para Ciências Agrárias, o que você precisa fazer é:
  
-(1) Fork um repositório GitHub existente para fazer sua própria “copia” (FORK)
-(2) Faça com que esse repo bifurcado fale com seu R / RStudio local (CLONE)
+(1) Crie um repositório no GitHub
+(2) Faça com que esse repo fale com seu R / RStudio local (CLONE)
 (3) Faça algumas edições nesses arquivos localmente
 (4) Empurre-os de volta para o seu branch do repo (STAGE / COMMIT / PUSH)
 
@@ -142,30 +140,16 @@ Para o propósito de começar o curso de Programação em R para Ciências Agrá
 
 Siga o exemplo simples abaixo para garantir que você seja capaz de fazer essas coisas:
  
-1. Crie uma pasta chamada github no diretório inicial do seu computador (há algum debate sobre essa abordagem, mas funciona para mim, vamos todos começar assim e você pode mudar mais tarde se decidir)
-para.
-
-    a. Em um Mac: Usuario > Documents > (coloque a pasta ‘github’ aqui)
-    b. Windows: My Documents > (coloque a pasta ‘github’ aqui)
+1. Faça login em sua conta GitHub
  
-2. Faça login em sua conta GitHub
-
-3. Vá para o meu repositório [aula-github-teste](https://github.com/maxwelco/aula-github-teste). Observe que existem alguns arquivos no repo.
-
-4. Clique em ‘Fork’ para criar sua própria cópia do repo em sua conta (você não tem permissão para alterar nada na minha, então não se preocupe em destruí-lo):
-
-
-
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("images/github.png")
-```
+2. Crie um repositório no github > + > New repository
+ 
+3. Vá para o repositório criado **nome-do-repo**. Observe que o repositório não possui nenhum arquivo
 
 
 
 
-
-
-5. Depois de fazer o fork, agora você tem sua própria cópia desse repo. Mas você ainda precisa falar com o RStudio para que possa realmente trabalhar com ele. Após a bifurcação, clique no botão verde ‘Clonar ou baixar’ e siga estas instruções cuidadosamente:
+5. Depois do repositório feito, você tem seu próprio repositório. Clique no botão verde ‘Clonar’ e siga estas instruções cuidadosamente:
 
    a. Quando você clica em "Clonar ou fazer download", uma pequena janela é exibida como esta:
 
@@ -192,9 +176,9 @@ knitr::include_graphics("images/github_3.png")
  
    g. Pressione **Create Project** (opcional: selecione ‘Open in new session’ se você já estiver trabalhando em algo que não deseja fechar)
  
-   h. O que você acabou de criar é um projeto habilitado para git que contém todos os arquivos contidos no repositório bifurcado, agora você tem o seu diretório de trabalho e espero que você trabalhe com eles.
+   h. O que você acabou de criar é um projeto habilitado para git que contém todos os arquivos contidos no repositório (nesse caso nenhum arquivo ainda), agora você tem o seu diretório de trabalho e espero que você trabalhe com eles.
  
-6. Faça algumas alterações no R markdown
+6. Abra um novo arquivo R markdown (.Rmd): File > New File > RMarkown. Salve esse arquivo (.Rmd) no dire
  
    a. No RStudio, agora clique no arquivo ‘test_github.Rmd’ na guia “Arquivos” para abri-lo
  
