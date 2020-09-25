@@ -12,7 +12,7 @@ output:
 ---
 
 
-As Etapas descritas aqui são amplamente baseadas no resumo de [Alison Presmanes Hill](https://alison.rbind.io) e no Happy Git with R de Jenny Bryan (www.happygitwithr.com). O livro é ótimo, fácil de seguir e muito mais completo (e provavelmente tecnicamente correto) do que este documento.
+As Etapas descritas aqui são amplamente baseadas no resumo de [Alison Presmanes Hill](https://alison.rbind.io) e no Happy Git with R de Jenny Bryan (https://happygitwithr.com). O livro é ótimo, fácil de seguir e muito mais completo (e provavelmente tecnicamente correto) do que este documento.
 
 
 # Crie uma conta no Github
@@ -144,12 +144,37 @@ Siga o exemplo simples abaixo para garantir que você seja capaz de fazer essas 
  
 2. Crie um repositório no github > + > New repository
  
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/repo.png")
+```
+
+<br>
+
+Após clicar em <font color='blue'>`New repository`</font>, vai abrir essa página:
+
+<br>
+
+
+
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/repo_2.png")
+```
+ 
+<br>
+ 
+Escolha um nome para o repositório e clique em <font color='green'>`Create repository`</font>
+
+
+ 
+ 
 3. Vá para o repositório criado **nome-do-repo**. Observe que o repositório não possui nenhum arquivo
 
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/repo_3.png")
+```
 
 
-
-5. Depois do repositório feito, você tem seu próprio repositório. Clique no botão verde ‘Clonar’ e siga estas instruções cuidadosamente:
+4. Depois do repositório feito, você tem seu próprio repositório. Clique no botão verde ‘Clonar’ e siga estas instruções cuidadosamente:
 
    a. Quando você clica em "Clonar ou fazer download", uma pequena janela é exibida como esta:
 
@@ -164,29 +189,29 @@ knitr::include_graphics("images/github_2.png")
  
    c. Abra ou volte para o RStudio. Escolha: File > New Project > Version Control > Git, que leva você a uma tela como esta:
 
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("images/github_3.png")
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/github_8.png")
 ```
 
    d. Cole o URL (que você copiou do github ao pressionar ‘Clonar ou baixar’) na seção **Repository URL**: e ...
  
    e. **Pressione TAB** para preencher automaticamente a seção Nome do diretório do projeto: com o projeto correto (correspondente) denominado vinculado ao repositório github, então ...
  
-   F. **Crie um projeto como subdiretório** de (escolha a pasta github que você criou em seu diretório inicial)
+   f. **Crie um projeto como subdiretório** de (escolha uma pasta/local de preferência no seu PC/latop)
  
    g. Pressione **Create Project** (opcional: selecione ‘Open in new session’ se você já estiver trabalhando em algo que não deseja fechar)
  
    h. O que você acabou de criar é um projeto habilitado para git que contém todos os arquivos contidos no repositório (nesse caso nenhum arquivo ainda), agora você tem o seu diretório de trabalho e espero que você trabalhe com eles.
  
-6. Abra um novo arquivo R markdown (.Rmd): File > New File > RMarkown. Salve esse arquivo (.Rmd) no dire
+5. Abra um novo arquivo R markdown (.Rmd): File > New File > RMarkown. Salve esse arquivo (ex. Teste.Rmd).
  
-   a. No RStudio, agora clique no arquivo ‘test_github.Rmd’ na guia “Arquivos” para abri-lo
+   a. No RStudio, agora clique no arquivo ‘ex. Teste.Rmd’ na guia “Arquivos” para abri-lo
  
-   b. Faça pequenas alterações no documento markdown (adicione seu nome, altere alguns nomes de variáveis quando solicitado, etc.)
+   b. Faça pequenas alterações no documento R markdown (adicione seu nome, altere alguns nomes de variáveis quando solicitado, etc.)
  
    c. Salve o .Rmd atualizado
  
-7. Preparar, enviar e enviar projetos / arquivos atualizados de volta ao github
+6. Preparar, enviar e enviar projetos / arquivos atualizados de volta ao github
  
 Quaisquer arquivos/projetos atualizados aparecerão na guia 'Git' no RStudio (na primeira vez que você fizer isso, seu arquivo .Rproj, o .Rmd atualizado e o arquivo gitignore estarão todos presentes aqui.
  
@@ -196,9 +221,15 @@ Quaisquer arquivos/projetos atualizados aparecerão na guia 'Git' no RStudio (na
 
 - Depois de confirmar, pressione a seta verde (`push`) para cima para empurrar. Nenhum erro = funcionando. Pode ser necessário inserir seu nome de usuário / senha do github para fazer isso.
 
-```{r, echo=FALSE, fig.cap="", out.width = '50%', fig.align="center", fig.retina = 2, fig.pos='h'}
-knitr::include_graphics("images/github_4.png")
+```{r, echo=FALSE, fig.cap="", out.width = '100%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/commit.png")
 ```
+
+```{r, echo=FALSE, fig.cap="", out.width = '75%', fig.align="center", fig.retina = 2, fig.pos='h'}
+knitr::include_graphics("images/commit_1.png")
+```
+
+
 
 8. Certifique-se de ter feito `Push` de volta para o github com sucesso: Vá para o github, atualize o repo. Você deve ver que os arquivos .Rproj e .Rmd foram confirmados recentemente. Clique no arquivo git-test.Rmd no github para ver o código contido - Ele contém suas atualizações? Se sim, ÓTIMO. É isso aí! 
  
