@@ -1,2 +1,2 @@
-# UOP-R_PG
+# R workshops
 Teaching R materials 
