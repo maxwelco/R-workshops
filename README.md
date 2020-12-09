@@ -1,2 +1,2 @@
 # R workshops
-Teaching R materials 
+Teaching R materials
